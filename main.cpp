@@ -23,6 +23,22 @@ void grayscale(Image3CH & in, Image1CH & out) {		// konwertowanie obrazu do skal
 	}
 }  
 
+
+void binarization(Image1CH & in) {				// progowanie obrazu		
+	for (int i = 0; i < in.width(); i++) {
+		for (int j = 0; j < in.height(); j++) {
+			if (in(i, j).I() > 0.451) {
+				in(i, j).I() = 1;
+			}
+			else {
+				in(i, j).I() = 0;
+			}
+		}
+	}
+}
+
+
+
 int main(){
 
 	// 0 pik   [2]
@@ -35,6 +51,7 @@ int main(){
 	in.ShowImage("Original");
 	
 	grayscale(in, dst);
+	binarization(dst);
 	
 	return 0;
 }
