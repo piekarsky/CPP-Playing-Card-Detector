@@ -42,21 +42,6 @@ void binarization(Image1CH & in) {				// progowanie obrazu
 funkcja znajduje karty i zakreœla je prostok¹tami
 */
 void findCard(Image1CH &dst){		
-	/*
-					xtr, ytr
-	__________________________  A
-	|   |  x| x |x |   |   |    |
-	--------------------------  |
-	|   |  x| o |x |   |   |    |
-	--------------------------  |
-	|   |  x| x |x |   |   |    |
-	--------------------------  |
-	xbl, ybl                    Y
-	x ---------------------->>
-	
-*/
-
-
 	// algorytm wype³nienia powodziowego
 
 	unsigned int ccC;
@@ -88,6 +73,40 @@ void findCard(Image1CH &dst){
             }
         }
 		
+		xbl = 10000; ybl = 10000; xtr = 0; ytr = 0; 
+        if (x0 >= 0 && y0 >= 0) {
+            stos.push(x0);		 // x0 i y0 na stos 
+            stos.push(y0);
+            bool gooo = true;
+            while (gooo) {
+                y = stos.top(); stos.pop(); x = stos.top(); stos.pop();		// pobiera ze stosu x i y
+				
+
+			   // liczy najmniejsze i najwiêksze wartoœci
+			   // najmniejsze to bottom left, a najwiêksze to top right
+                xbl = (x < xbl) ? x : xbl;	ybl = (y < ybl) ? y : ybl;
+                xtr = (x > xtr) ? x : xtr;	ytr = (y > ytr) ? y : ytr;
+
+						
+				dst(x, y).I() = iNkar;
+                for (k = 0; k < 8; k++) {				    // 8 bo zgodnie z oœmiospójnoœci¹
+                    x1 = x + xofst[k]; 	y1 = y + yofst[k];
+                    if (dst(x1, y1).I() > 0.9) {			// je¿eli ten kolor ma wartoœæ intensywnoœci wieksz¹ ni¿ bia³y to idzie na stos
+                        stos.push(x1);
+                        stos.push(y1);
+                    }
+                }
+                gooo = !stos.empty();
+            }
+					
+            xtr += 1; ytr += 1;
+            xbl -= 2; ybl -= 2;
+            lista->push(xbl, ybl, xtr, ytr, 0);
+            x0 = -1; y0 = -1; 
+        } else {
+            goKart = false;
+        }
+	}
 
 
 int main(){
