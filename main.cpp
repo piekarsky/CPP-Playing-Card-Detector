@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stack>
 #include <math.h>
+#include "list.h"
 
 
 using namespace std;
@@ -37,6 +38,56 @@ void binarization(Image1CH & in) {				// progowanie obrazu
 	}
 }
 
+/*
+funkcja znajduje karty i zakreœla je prostok¹tami
+*/
+void findCard(Image1CH &dst){		
+	/*
+					xtr, ytr
+	__________________________  A
+	|   |  x| x |x |   |   |    |
+	--------------------------  |
+	|   |  x| o |x |   |   |    |
+	--------------------------  |
+	|   |  x| x |x |   |   |    |
+	--------------------------  |
+	xbl, ybl                    Y
+	x ---------------------->>
+	
+*/
+
+
+	// algorytm wype³nienia powodziowego
+
+	unsigned int ccC;
+	stack<unsigned int> stos;
+    bool go = true, goKart = true;
+	int x0 = -1, y0 = -1;
+	double intens = 0.0;
+	unsigned int x, y, x1, y1, i, j, k, xbl, ybl, xtr, ytr, iD, I = 0, J = 0;
+	while(goKart){			 // znajduje ziarno
+        go = true;
+        for (i = 0; i < dst.width(); i++) {
+            if (go) {
+                for (j = 0; j < dst.height(); j++) {
+                    if (dst(i, j).I() > 0.8) {
+                        intens = 0.0;
+                        for (int n = 0; n < 5; n++) {
+                            for (int m = 0; m < 5; m++) {
+                                intens += dst((i  > n-2) ? i-n + 2: i, (j > m-2) ? j - m+2 : j).I();
+                            }
+                        }
+                        if(intens > 5.0){
+                            y0 = j; x0 = i;				// x0, y0 - wspó³rzêdne ziarna
+                            go = false; break;
+                        }
+
+                    }
+                }
+
+            }
+        }
+		
 
 
 int main(){
