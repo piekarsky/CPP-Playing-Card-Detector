@@ -39,6 +39,24 @@ void binarization(Image1CH & in) {				// progowanie obrazu
 }
 
 
+double getD2(double arr[HIST_VOL][2], double x, double y){
+   	double s = 0.0, t, sM = 0.0, ar[HIST_VOL];
+    unsigned int i;
+    for(i = 0; i < HIST_VOL; i++){
+        t = dist(x, y, arr[i][0], arr[i][1]);			
+        sM += t; ar[i] = t;							// sumuje punkty bêd¹ce na obrze¿u karty
+    }
+    sM /= (double)HIST_VOL;
+    for(i = 0; i < HIST_VOL; i++){
+        t = sM - ar[i];			
+        s += t*t;
+    }
+    return pow(s, 0.5);		// zwraca odchylenie standardowe
+}
+
+
+
+
 /*
 funkcja znajduje karty i zakreœla je prostok¹tami
 */
