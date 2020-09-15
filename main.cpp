@@ -38,10 +38,26 @@ void binarization(Image1CH & in) {				// progowanie obrazu
 	}
 }
 
+
 /*
 funkcja znajduje karty i zakreœla je prostok¹tami
 */
 void findCard(Image1CH &dst){		
+	/*
+					xtr, ytr
+	__________________________  A
+	|   |  x| x |x |   |   |    |
+	--------------------------  |
+	|   |  x| o |x |   |   |    |
+	--------------------------  |
+	|   |  x| x |x |   |   |    |
+	--------------------------  |
+	xbl, ybl                    Y
+	x ---------------------->>
+	
+*/
+
+
 	// algorytm wype³nienia powodziowego
 
 	unsigned int ccC;
@@ -109,13 +125,65 @@ void findCard(Image1CH &dst){
 	}
 
 
+	bool goL = true, goD = true;
+
+	dst.ShowImage("Playing card detection");		 
+
+	goL = true;
+    while(goL){
+        goL = lista->bot() && goL;
+        if(goL){
+            goD = true;
+            while(goD){
+                goL = false;
+                if(lista->getRad() < 200){		// zak³ada, ¿e karta ma promieñ wiêkszy ni¿ 200
+                    lista->del();
+                    goD = false;
+                    goL = true;
+                    break;
+					
+                } else {
+                    goD = lista->next(); 
+                }
+            }
+        }
+    }
+
+
+unsigned int setKarKol_(unsigned int Id){      
+	bool goL = true;
+    double T[4];
+	int i0 = -1;
+	unsigned int i, k = 0, ccC = 10000;
+    for (i = 0; i < 4; i++)T[i] = 0.0;
+    if(lista->bot(Id)){
+		
+        k = 0;
+        while(goL){
+            for (i = 0; i < 4; i++) {								   // testD2 sprawdza ró¿nice pomiêdzy danym symbolem, a wzorcem
+				T[i] += lista->testD2(lista->acT->ffT, symHistS[i]);   // symHist[i] - histogramy wzorców
+            }														   // ffT - histogram dla ka¿dego symbolu z listy
+            goL = lista->next(Id);
+            k++;
+        }
+
+
+
+
+
+
 int main(){
 
 	// 0 pik   [2]
 	// 1 kier  [7]
 	// 2 trefl [9]
 	// 3 karo  [8]
+	
+	printf("Kolor 0 = pik \nKolor 1 = kier \nKolor 2 = trefl \nKolor 3 = karo\n"); 
 
+	lista = new listA();
+	setArOfs();
+	setSymArr(); 
 		
 	in.LoadImage("img\\ideal.jpg", LPL_LOAD_FITTED);		 // wczytanie idealnego zdjêcia
 	in.ShowImage("Original");
