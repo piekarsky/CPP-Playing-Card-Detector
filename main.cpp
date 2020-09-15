@@ -38,22 +38,27 @@ void binarization(Image1CH & in) {				// progowanie obrazu
 	}
 }
 
-
-double getD2(double arr[HIST_VOL][2], double x, double y){
-   	double s = 0.0, t, sM = 0.0, ar[HIST_VOL];
-    unsigned int i;
-    for(i = 0; i < HIST_VOL; i++){
-        t = dist(x, y, arr[i][0], arr[i][1]);			
-        sM += t; ar[i] = t;							// sumuje punkty bêd¹ce na obrze¿u karty
-    }
-    sM /= (double)HIST_VOL;
-    for(i = 0; i < HIST_VOL; i++){
-        t = sM - ar[i];			
-        s += t*t;
-    }
-    return pow(s, 0.5);		// zwraca odchylenie standardowe
-}
-
+/*
+funkcja wype³nia obszar miêdzy krawêdziami prostok¹ta, a konturem karty
+*/
+void colorBorder(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr, unsigned int Ytr){
+	unsigned int i, j;
+	for (i = Xbl+1; i < Xtr; i++){
+        for (j = Ybl+1; j < Ytr; j++) {
+            if(dst(i, j).I() == iNkar)break;
+            if (dst(i, j).I() < 0.1){
+                dst(i, j).I() = iNkbo;
+            }
+        }
+	}
+	for (i = Xbl+1; i < Xtr; i++){
+        for (j = Ytr-1; j > Ybl; j--) {
+            if(dst(i, j).I() == iNkar)break;
+            if (dst(i, j).I() < 0.1){
+                dst(i, j).I() = iNkbo;
+            }
+        }
+	}
 
 
 
