@@ -76,7 +76,49 @@ unsigned int findSign(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigne
 		
 		// algorytm wyszukuje czarne elementy i wype³nia je bia³ym kolorem
 		go = true; goCol = false;
-
+        for (i = Xbl; i <= Xtr; i++) {
+            if (go) {
+                for (j = Ybl; j <= Ytr; j++) {
+                    goCol = (dst(i, j).I() > 0.35 && dst(i, j).I() < 0.45) || goCol;
+                    if(goCol){
+                        if (dst(i, j).I() < 0.3) {
+                            y0 = j; x0 = i;
+                            go = false;
+                            break;
+                        }
+                    }
+                }
+            }
+						
+        }
+        if (x0 >= 0 && y0 >= 0) {
+            stos.push(x0);
+            stos.push(y0);
+			bool gooo = true;
+			xbl = 10000; ybl = 10000; xtr = 0; ytr = 0; aR = 0;
+            while (gooo) {
+                y = stos.top(); stos.pop(); x = stos.top(); stos.pop();
+				xbl = (x < xbl) ? x : xbl;	ybl = (y < ybl) ? y : ybl;
+                xtr = (x > xtr) ? x : xtr;	ytr = (y > ytr) ? y : ytr;
+				if (dst(x, y).I() < 0.2) { dst(x, y).I() = iNksy; aR++; }
+                for (k = 0; k < 8; k++) {
+                    x1 = x + xofst[k]; 	y1 = y + yofst[k];
+                    if(x1 > Xbl && x1 < Xtr && y1 > Ybl && y1 < Ytr){
+                        if (dst(x1, y1).I() < 0.2){
+                            stos.push(x1);
+                            stos.push(y1);
+                        }
+                    }
+                }
+				gooo = !stos.empty();
+            }
+			lista->push(xbl-2, ybl-2, xtr+2, ytr+2, Id);		
+			lista->setAr((double)aR);
+            x0 = -1; y0 = -1;
+        } else {
+            goKart = false;
+        }
+	}
 
 
 /*
