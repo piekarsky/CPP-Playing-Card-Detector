@@ -121,6 +121,25 @@ unsigned int findSign(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigne
 	}
 
 
+unsigned int findSignSym(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr, unsigned int Ytr) {
+	stack<unsigned int> stos;
+	int x0 = -1, y0 = -1;
+	unsigned int x, y, x1, y1, i, j, k, aR;
+	bool go = true;
+	for (i = Xbl; i <= Xtr; i++) {
+		if (!go)break;
+		for (j = Ybl; j <= Ytr; j++) {
+			if (dst(i, j).I() < 0.3) {
+				y0 = j; x0 = i;
+				go = false;
+				break;
+			}
+		}
+	}
+
+
+
+
 /*
 funkcja znajduje karty i zakreœla je prostok¹tami
 */
