@@ -63,6 +63,23 @@ void colorBorder(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int
 
 
 /*
+funkcja ta znajduje i oznacza symbole kart
+*/
+unsigned int findSign(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr, unsigned int Ytr, unsigned int Id, unsigned int &I, unsigned int &J){
+	unsigned int ccC = 0;
+	stack<unsigned int> stos;
+    bool go = true, goKart = true, goCol;
+	int x0 = -1, y0 = -1;
+	unsigned int x, y, x1, y1, i, j, k, xbl, ybl, xtr, ytr, iD, cnt = 0, aR;
+	
+	while(goKart){			// znajduje ziarna
+		
+		// algorytm wyszukuje czarne elementy i wype³nia je bia³ym kolorem
+		go = true; goCol = false;
+
+
+
+/*
 funkcja znajduje karty i zakreœla je prostok¹tami
 */
 void findCard(Image1CH &dst){		
