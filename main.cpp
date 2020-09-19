@@ -139,7 +139,6 @@ unsigned int findSignSym(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsi
 
 
 
-
 /*
 funkcja znajduje karty i zakreœla je prostok¹tami
 */
@@ -249,7 +248,15 @@ void findCard(Image1CH &dst){
             }
         }
     }
-
+	
+    goL = true;
+    if(lista->bot(0)){
+        while(goL){				// idzie na bottom(0) - idzie na pocz¹tek, pobiera z listy xbl, ybl, xtr, ytr i id i zwiêksza prostok¹t
+            lista->get(xbl, ybl, xtr, ytr, iD);
+            xtr += 2; ytr += 2;
+			xbl -= 2; ybl -= 2;
+			
+			
 
 unsigned int setKarKol_(unsigned int Id){      
 	bool goL = true;
