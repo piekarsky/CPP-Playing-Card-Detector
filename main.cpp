@@ -59,8 +59,23 @@ void colorBorder(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int
             }
         }
 	}
-
-
+	for (j = Ybl+1; j < Ytr; j++) {
+        for (i = Xbl+1; i < Xtr; i++){
+            if(dst(i, j).I() == iNkar)break;
+            if (dst(i, j).I() < 0.1){
+                dst(i, j).I() = iNkbo;
+            }
+        }
+	}
+	for (j = Ybl+1; j < Ytr; j++) {
+        for (i = Xtr-1; i > Xbl; i--){
+            if(dst(i, j).I() == iNkar)break;
+            if (dst(i, j).I() < 0.1){
+                dst(i, j).I() = iNkbo;
+            }
+        }
+	}
+}
 
 /*
 funkcja ta znajduje i oznacza symbole kart
@@ -119,6 +134,57 @@ unsigned int findSign(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigne
             goKart = false;
         }
 	}
+
+	
+	// del to metoda, która usuwa zbêdne symbole kart (te które s¹ za ma³e) 
+	bool goL = true; unsigned int ccc = lista->cntInKart(Id), mxx = lista->getMax(Id);
+	if(ccc > 0){
+        double SD = lista->getSD(Id);
+        lista->bot(Id);
+
+		// jezeli ró¿nica pomiêdzy symbolem maksymalnym (symbolem, który ma najwiêksz¹ œrednicê),  
+		// a badanym symbolem jest wiêksza od odchylenia standardowego to usuwa taki symbol
+
+		while(goL){
+            // cout << " SD = " << SD << " mxx = " << mxx << " Rad = " << lista->getRad() << endl;
+            if((double)(mxx - lista->getRad()) > SD){
+                lista->del();
+                if(!lista->bot(Id)){
+                    break;
+                }
+            } else {
+                goL = lista->next(Id);
+            }
+        }
+		
+        if(lista->bot(Id)){
+            goL = true;
+            while(goL){
+				ccC++;
+                lista->get(xbl, ybl, xtr, ytr,iD);
+                xtr += 2; ytr += 2;
+                xbl -= 2; ybl -= 2;
+                getFFT(dst, xbl, ybl, xtr, ytr, I, J);
+
+				// zaznacza symbole na poszczególnych kartach
+                dst.DrawLine(xbl, ybl, xtr, ybl, iNkli);
+                dst.DrawLine(xbl, ybl, xbl, ytr, iNkli);
+                dst.DrawLine(xtr, ybl, xtr, ytr, iNkli);
+                dst.DrawLine(xtr, ytr, xbl, ytr, iNkli);
+
+
+                if(++I == 5){
+                    I = 0;
+                    if(++J == 12){
+                        J = 0;
+                    }
+                }
+                goL = lista->next(Id);
+            }
+        }
+    }
+	return ccC;
+}
 
 
 unsigned int findSignSym(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr, unsigned int Ytr) {
