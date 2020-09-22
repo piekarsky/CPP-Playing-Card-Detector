@@ -367,6 +367,21 @@ void setKarKol(){
 
 
 
+void setArOfs(){
+	xofst[0] =  1; yofst[0] = -1;
+	xofst[1] =  1; yofst[1] =  0;
+	xofst[2] =  1; yofst[2] =  1;
+	xofst[3] =  0; yofst[3] =  1;
+	xofst[4] = -1; yofst[4] =  1;
+	xofst[5] = -1; yofst[5] =  0;
+	xofst[6] = -1; yofst[6] = -1;
+	xofst[7] =  0; yofst[7] = -1;
+}
+
+
+
+
+
 int main(){
 
 	// 0 pik   [2]
