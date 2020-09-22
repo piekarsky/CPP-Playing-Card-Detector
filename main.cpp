@@ -350,6 +350,20 @@ unsigned int setKarKol_(unsigned int Id){      // identyfikuje symbole poprzez p
 }
 
 
+void setKarKol(){
+	int i0;
+	bool goL = true;
+    unsigned int xbl, ybl, xtr, ytr, iD;
+    if(lista->bot(0)){
+        while(goL){
+            lista->get(xbl, ybl, xtr, ytr, iD);
+            i0 = setKarKol_(iD);
+            lista->goId(iD);
+			lista->setKolor(i0);
+            goL = lista->next(0);
+        }
+    }
+}
 
 
 
