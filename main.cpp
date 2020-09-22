@@ -324,7 +324,7 @@ void findCard(Image1CH &dst){
 			
 			
 
-unsigned int setKarKol_(unsigned int Id){      
+unsigned int setKarKol_(unsigned int Id){      // identyfikuje symbole poprzez porównanie histogramów wzorca i symbolu z karty
 	bool goL = true;
     double T[4];
 	int i0 = -1;
@@ -340,7 +340,14 @@ unsigned int setKarKol_(unsigned int Id){
             goL = lista->next(Id);
             k++;
         }
-
+		for (i = 0; i < 4; i++) {										
+			if (T[i] < ccC) {
+				i0 = i; ccC = T[i];									   // znajduje wartoœæ najmniejsz¹
+			}														   // i0 - wskazany symbol
+		}
+    }
+	return i0;
+}
 
 
 
