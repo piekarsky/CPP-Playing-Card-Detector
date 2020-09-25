@@ -18,23 +18,22 @@ class listA {
 
         bool top();			 // idü na koniec
         bool bot();			 // idü na poczatek
-       
-    protected:
-    private:
-};
+        bool prev();
+        bool next();
+        bool empty();
+        void get(unsigned int &blX, unsigned int &blY, unsigned int &trX, unsigned int &trY, unsigned int &Id);
+        void listA::setKarta(int karta);
+        void listA::setKolor(int karta);
+        void listA::setColor(int karta);
+        int listA::getKarta();
+        int listA::getKolor();
+        int listA::getColor();
 
-#endif // listA_H
+        bool next(unsigned int inKart); 
+        bool bot(unsigned int inKart);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+		unsigned int getId();				// pobera id karty
+        bool goId(unsigned int Id);			// wykonuje skok do okreúlonego id
+        bool del(unsigned int Id);			// usuwa element z listy o konkretnym id
+        bool del();							// usuwa act
+		
