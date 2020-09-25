@@ -38,6 +38,15 @@ void binarization(Image1CH & in) {				// progowanie obrazu
 	}
 }
 
+void diffArr(double* arr) {
+	for (unsigned int i = 0; i < HIST_VOL - 1; i++)arr[i] = arr[i + 1] - arr[i];
+}
+double dist(double xt, double yt, double xt1, double yt1) {
+	double t = xt - xt1, s = yt - yt1;
+	return pow(t * t + s * s, 0.5);
+}
+
+
 /*
 funkcja wype³nia obszar miêdzy krawêdziami prostok¹ta, a konturem karty
 */
