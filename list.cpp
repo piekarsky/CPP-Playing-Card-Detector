@@ -1,10 +1,10 @@
-#include "listA.h"
+#include "list.h"
 #include <math.h>
 #include <iostream>
 
 
 
-listA::listA(){
+list::list(){
     toP = 0;
     boT = 0;
     acT = 0;
@@ -13,19 +13,19 @@ listA::listA(){
 }
 
 
-listA::~listA(){
+list::~list(){
     ;
 }
 
 
 
-void listA::push(unsigned int blX, unsigned int blY, unsigned int trX, unsigned int trY, unsigned int inKarta){
+void list::push(unsigned int blX, unsigned int blY, unsigned int trX, unsigned int trY, unsigned int inKarta){
 	
-	// push - wstawia nowy element (bottomleft, topright i inKarta)
+	// push - inserts a new element (bottomleft, topright and inKarta)
 	
-	kartA* karta = new kartA();		  // inicjuje nowy obiekt typu 'karta'
+	card* karta = new card();		  // initialize a new 'card' object
     if(toP == 0)toP = karta;
-    Id++;							  // inkrementuje id
+    Id++;							  // inkrement the id
     karta->blX = blX;
     karta->blY = blY;
     karta->trX = trX;
@@ -39,19 +39,19 @@ void listA::push(unsigned int blX, unsigned int blY, unsigned int trX, unsigned 
     boT = karta; 
     acT = karta;					  // indeks do utworzonego obiektu karta
     for(unsigned int i = 0; i < HIST_VO_; i++){
-        karta->ffT[i] = 0.0;		  // zeruje tę macierz po to żeby można było dodawać elementy przy histogramie
+        karta->ffT[i] = 0.0;		  // reset this matrix to add items to the histogram
     }
 }
-bool listA::top(){ 
+bool list::top(){ 
     bool re = true;;
     if(boT != 0){
         acT = toP;
     } else {
-        re = false;			// lista jest pusta
+        re = false;			// the list is empty
     }
     return re;
 }
-bool listA::bot(){
+bool list::bot(){
     bool re = true;
     if(boT != 0){
         acT = boT;
@@ -60,7 +60,7 @@ bool listA::bot(){
     }
     return re;
 }
-bool listA::prev(){
+bool list::prev(){
     bool re = true;;
     if(acT != 0){
         acT = acT->prev; 
@@ -69,22 +69,24 @@ bool listA::prev(){
     }
     return re;
 }
-bool listA::next(){
+bool list::next(){
     bool re = true;
     if(acT != 0){
-        acT = acT->next;	 // jeżeli ten aktualny element istnieje to wtedy ustawia wskaźnik na ten, który jest następny
+        acT = acT->next;	// if this current element exists then set pointer to whichever is next
 
-        re = acT != 0;		 // jeżeli jest różne od zera to istnieje jakiś następnik, a jeżeli nie to była to ostatnia karta
+        re = acT != 0;		 // if not zero then there is a successor, and if not it was the last card
     } else { 
-        re = false;		     // fałsz jest wtedy kiedy act jest równy zero
+        re = false;		     // false is when act is zero
     }
     return re;
 }
-bool listA::empty(){
-    return (toP == 0);		 // top jest zero kiedy lista jest pusta
+
+
+bool list::empty(){
+    return (toP == 0);		 // top is zero when the list is empty
 }
 
-void listA::get(unsigned int &blX, unsigned int &blY, unsigned int &trX, unsigned int &trY, unsigned int &Id){
+void list::get(unsigned int &blX, unsigned int &blY, unsigned int &trX, unsigned int &trY, unsigned int &Id){
     blX     = acT->blX;
     blY     = acT->blY;
     trX     = acT->trX;
@@ -92,6 +94,6 @@ void listA::get(unsigned int &blX, unsigned int &blY, unsigned int &trX, unsigne
     Id      = acT->Id;
 }
 
-void listA::setKarta(int karta){	 // ustawia wartość karty 2, 7, 8, 9
+void list::setKarta(int karta){	// set the value to 2, 7, 8, 9
     acT->karta = karta;
 }	
