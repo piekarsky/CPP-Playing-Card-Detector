@@ -1,9 +1,9 @@
-#ifndef kartA_H
-#define kartA_H
+#ifndef card_H
+#define card_H
 #include <math.h>
 #define M_PI  (3.14159265)
-#define HIST_VO_    (  256)			 // iloœæ pozycji w histogramie
-#define HIST_VOL    ( 1024)			 // iloœæ odleg³oœci (promieni) od œrodka do brzegów prostok¹ta
+#define HIST_VO_    (  256)			 // number of items in the histogram
+#define HIST_VOL    ( 1024)			 // number of distances (radius) from the center to the edges of the rectangle
 								 
 
 class kartA {
