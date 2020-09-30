@@ -6,24 +6,24 @@
 #define HIST_VOL    ( 1024)			 // number of distances (radius) from the center to the edges of the rectangle
 								 
 
-class kartA {
+class card {
    public:
-        kartA* prev;		// prev i next wskazuj¹ na obiekty karta
-		kartA* next;
-        int karta;			// wartoœci kart [2, 7, 8, 9]
-        int kolor;			// kolory kart [0, 1, 2, 3]
-        int color;			// kolory kart 0, 1 [czerwony, czarny]
+        card* prev;		// prev and next point to card objects
+		card* next;
+        int cardValue;			// the card values [2, 7, 8, 9]
+        int cardColor;			// the card colors [0, 1, 2, 3]
+        int color;			// the card color 0, 1 [red, black]
 
-		// karty s¹ to obiekty zdefiniowane przez prostok¹ty
+		// cards are objects defined by rectangles
 	
-		unsigned int inKarta;		// wskaŸnik Id karty 'Matki'
-		// dla podobiektów (symboli) inKarta odpowiada Id karty
+		unsigned int inCard;		// indicator Id of 'Mothers' card
+		// for subobjects (symbols) inCard matches the ID of the card
 		unsigned int Id; 
         unsigned int blX, blY, trX, trY;
-		double oO, aR, xC, yC;		// oO = obwód, aR = pole, xC, yC = wspó³rzêdne œrodka karty
+		double oO, aR, xC, yC;		// oO = perimeter, aR = area, xC, yC = card center coordinates
         double ffT[HIST_VO_];
-        kartA();
-        virtual ~kartA();
+        card();
+        virtual ~card();
         unsigned int getRad();
 
     protected:
