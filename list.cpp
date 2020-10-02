@@ -23,23 +23,23 @@ void list::push(unsigned int blX, unsigned int blY, unsigned int trX, unsigned i
 	
 	// push - inserts a new element (bottomleft, topright and inCard)
 	
-	card* cardA = new card();		 	 // initialize a new 'card' object
+	card* Card = new card();		 	 // initialize a new 'card' object
     if(toP == 0)toP = karta;
-    Id++;					                   // inkrement the id
-    karta->blX = blX;
-    karta->blY = blY;
-    karta->trX = trX;
-    karta->trY = trY;
-    karta->next = boT;				  // card next = bot because it sets the pointer to the beginning
-    karta->Id   = Id;
-    karta->inKarta  = inCard;
-    if(karta->next != 0)karta->next->prev = karta;
-    karta->prev  = 0;
-    karta->karta = 0;
-    boT = karta; 
-    acT = karta;					  // index to the created object tab
+    Id++;					                   // increment the id
+    Card->blX = blX;
+    Card->blY = blY;
+    Card->trX = trX;
+    Card->trY = trY;
+    Card->next = boT;				  // card next = bot because it sets the pointer to the beginning
+    Card->Id   = Id;
+    Card->inCard  = inCard;
+    if(Card->next != 0)Card->next->prev = Card;
+    Card->prev  = 0;
+    Card->Card = 0;
+    boT = Card; 
+    acT = Card;					  // index to the created object tab
     for(unsigned int i = 0; i < HIST_VO_; i++){
-        karta->ffT[i] = 0.0;				  // reset this matrix to add items to the histogram
+        Card->ffT[i] = 0.0;				  // reset this matrix to add items to the histogram
     }
 }
 bool list::top(){ 
@@ -98,6 +98,6 @@ void list::get(unsigned int &blX, unsigned int &blY, unsigned int &trX, unsigned
 /*
 this function set the value to 2, 7, 8, 9
 */
-void list::setKarta(int karta){	
-    acT->karta = karta;
+void list::setCard(int Card){	
+    acT->Card = Card;
 }	

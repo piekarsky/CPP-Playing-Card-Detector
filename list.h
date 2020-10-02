@@ -1,18 +1,18 @@
-#ifndef listA_H
-#define listA_H
-#include "kartA.h"
+#ifndef list_H
+#define list_H
+#include "card.h"
 
-class listA {
+class list {
    public:
-        listA();
-        virtual ~listA();
-        kartA* toP;			// wskaünik do elementu pierwszego
-        kartA* boT;			// wskaünik do elementu ostatniego
-        kartA* acT;			// act przy przesuwaniu ustawia na aktualny element, ktÛry wynika≥ z 'next' czy 'previous'
+        list();
+        virtual ~list();
+        card* toP;			// wskaünik do elementu pierwszego
+        card* boT;			// wskaünik do elementu ostatniego
+        card* acT;			// act przy przesuwaniu ustawia na aktualny element, ktÛry wynika≥ z 'next' czy 'previous'
 
-		unsigned int Id;
+        unsigned int Id;
         double stepHST;
-        void push(unsigned int blX, unsigned int blY, unsigned int trX, unsigned int trY, unsigned int inKarta);
+        void push(unsigned int blX, unsigned int blY, unsigned int trX, unsigned int trY, unsigned int inCard);
 
 
 
@@ -22,18 +22,18 @@ class listA {
         bool next();
         bool empty();
         void get(unsigned int &blX, unsigned int &blY, unsigned int &trX, unsigned int &trY, unsigned int &Id);
-        void listA::setKarta(int karta);
-        void listA::setKolor(int karta);
-        void listA::setColor(int karta);
-        int listA::getKarta();
-        int listA::getKolor();
-        int listA::getColor();
+        void list::setCard(int Card);
+        void list::setCardColor(int Card);
+        void list::setColor(int Card);
+        int list::getCard();
+        int list::getKolor();
+        int list::getColor();
 
-        bool next(unsigned int inKart); 
-        bool bot(unsigned int inKart);
+        bool next(unsigned int inCard); 
+        bool bot(unsigned int inCard);
 
-		unsigned int getId();				// pobera id karty
+        unsigned int getId();			// pobera id karty
         bool goId(unsigned int Id);			// wykonuje skok do okreúlonego id
         bool del(unsigned int Id);			// usuwa element z listy o konkretnym id
-        bool del();							// usuwa act
+        bool del();				// usuwa act
 		
