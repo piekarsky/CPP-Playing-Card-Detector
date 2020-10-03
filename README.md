@@ -13,3 +13,10 @@ and extracts the R, G, B components. Then the brightness of each color is summed
 basic and divides this sum completely by 3. After this operation, a synthesis should be made
 color from these three components. The operations are performed in a loop for each image pixel.
 The photo below shows the perfect image after conversion.
+
+
+- binarization function
+The purpose of this function is to separate the foreground objects from the background. It designates for
+the image brightness threshold, and then pixels brighter than the threshold set are given one
+value, and the darker ones another. In this program, this function assigns an intensity value
+1 pixels whose intensity is greater than 0.45 and assigns a value of 0 to others.
