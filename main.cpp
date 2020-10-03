@@ -15,8 +15,10 @@ Image3CH sym3(SYM_W, SYM_H);
 Image1CH sym1(SYM_W, SYM_H);
 
 
-
-void grayscale(Image3CH & in, Image1CH & out) {		// konwertowanie obrazu do skali szaroœci	
+/*
+this function converts the image to grayscale
+*/
+void grayscale(Image3CH & in, Image1CH & out) {			
 	for (int i = 0; i < in.width(); i++) {
 		for (int j = 0; j < in.height(); j++) {
 			out(i, j).Intensity() = (in(i, j).Red() + in(i, j).Green() + in(i, j).Blue()) / 3;
@@ -25,7 +27,11 @@ void grayscale(Image3CH & in, Image1CH & out) {		// konwertowanie obrazu do skal
 }  
 
 
-void binarization(Image1CH & in) {				// progowanie obrazu		
+
+/*
+this function performs image  thresholding
+*/
+void binarization(Image1CH & in) {					
 	for (int i = 0; i < in.width(); i++) {
 		for (int j = 0; j < in.height(); j++) {
 			if (in(i, j).I() > 0.451) {
@@ -38,9 +44,14 @@ void binarization(Image1CH & in) {				// progowanie obrazu
 	}
 }
 
+
+
 void diffArr(double* arr) {
 	for (unsigned int i = 0; i < HIST_VOL - 1; i++)arr[i] = arr[i + 1] - arr[i];
 }
+
+
+
 double dist(double xt, double yt, double xt1, double yt1) {
 	double t = xt - xt1, s = yt - yt1;
 	return pow(t * t + s * s, 0.5);
@@ -48,7 +59,7 @@ double dist(double xt, double yt, double xt1, double yt1) {
 
 
 /*
-funkcja wype³nia obszar miêdzy krawêdziami prostok¹ta, a konturem karty
+this function fills the area between the rectangle's edges and the card outline
 */
 void colorBorder(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr, unsigned int Ytr){
 	unsigned int i, j;
