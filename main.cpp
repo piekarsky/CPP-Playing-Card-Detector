@@ -2,17 +2,28 @@
 #include <iostream>
 #include <stack>
 #include <math.h>
+#include <stdio.h>
 #include "list.h"
-
+#define iNkar  0.4
+#define iNkli  0.7
+#define iNkbo  0.8
+#define iNksy  0.99
+#define iNkto  0.01
+#define SYM_W  44
+#define SYM_H  44
 
 using namespace std;
-
 
 Image3CH in(1936, 1216);
 Image1CH dst(in.width(), in.height());
 Image1CH tst(2600, 2460);
 Image3CH sym3(SYM_W, SYM_H);
 Image1CH sym1(SYM_W, SYM_H);
+
+list* List;
+unsigned int xofst[8], yofst[8];
+double symHistS[4][HIST_VO_];
+double oOhistS[4][2];
 
 
 /*
@@ -56,6 +67,44 @@ double dist(double xt, double yt, double xt1, double yt1) {
 	double t = xt - xt1, s = yt - yt1;
 	return pow(t * t + s * s, 0.5);
 }
+
+
+/*
+
+creating a distance function (along the radii) of the pattern shape from the center of the rectangle that encompasses the symbol
+
+*/
+void getFFT_(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr, unsigned int Ytr, double arr[HIST_VOL], double ColBor, double &oO){
+	double  Y, t, _Y, xt = -1.0, yt = -1.0, fi, x, y, xt1 = -1.0, yt1 = -1.0,
+
+            PI2 = 2.0f*M_PI, Astep = PI2/(double)HIST_VOL, Pstep = Astep, Rad = 0.0;
+    unsigned int i, w, h, k = 0;
+    bool go;
+
+
+	// Astep to PI2 przez dok³adnoœæ z jak¹ te promienie s¹ wyznaczone (k¹t o jaki przesuwa promieñ)
+
+	for(i = 0; i < HIST_VOL; i++){
+		fi = Astep * (double)i;				  // k¹ty s¹ proporcjonalne do [i]
+        x = cos(fi) + xo; y = sin(fi) + yo;
+        go = true;
+		t = Pstep;
+        while(go){
+			xt = xo + t*(x - xo);		      // xt, yt - wspó³rzêdne punktu na promieniu
+            yt = yo + t*(y - yo);		
+
+			w = (unsigned int)floor(xt);	  // xt, yt - wspó³rzêdne rzeczywiste punktu na promieniu
+            h = (unsigned int)floor(yt);	
+
+			// prowadzi detekcjê kszta³tu
+			if (w < Xbl || w > Xtr || h < Ybl || h >Ytr) {
+				arr[i] = _Y;
+				xt = xt1; yt = yt1;
+				go = false;
+			} 
+}
+
+
 
 
 /*
