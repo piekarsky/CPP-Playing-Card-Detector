@@ -76,7 +76,8 @@ creating a distance function (along the radii) of the pattern shape from the cen
 */
 void getFFT_(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr, unsigned int Ytr, double arr[HIST_VOL], double ColBor, double &oO){
 	double  Y, t, _Y, xt = -1.0, yt = -1.0, fi, x, y, xt1 = -1.0, yt1 = -1.0,
-
+            xo = (double)Xbl + ((double)Xtr - (double)Xbl) * 0.5,		 // xo, yo - wspó³rzêdne œrodka geometrycznego prostok¹ta obejmuj¹cego symbol
+            yo = (double)Ybl + ((double)Ytr - (double)Ybl) * 0.5,		 
             PI2 = 2.0f*M_PI, Astep = PI2/(double)HIST_VOL, Pstep = Astep, Rad = 0.0;
     unsigned int i, w, h, k = 0;
     bool go;
@@ -101,8 +102,43 @@ void getFFT_(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr
 				arr[i] = _Y;
 				xt = xt1; yt = yt1;
 				go = false;
-			} 
+			} else {
+				if(dst(w, h).I() == ColBor){			// je¿eli intensity bêdzie wykraczaj¹ce poza znak
+					Y = pow(pow(xt - xo, 2.0) + pow(yt - yo, 2.0), 0.5);
+					arr[i] = Y;
+					Rad = (Y > Rad)?Y:Rad;
+					_Y = Y;
+					go = false;
+				} else {
+					t += Pstep;
+				}
+            }
+        }
+		if (xt  < 0.0) { xt = 0.0; yt = 0.0; }
+		if (xt1 < 0.0) { xt1 = xt; yt1 = yt; }
+		oO += dist(xt, yt, xt1, yt1);
+		xt1 = xt; yt1 = yt;
+    }
+
+	
+    for(i = 0; i < HIST_VOL; i++){
+        arr[i] /= Rad;
+    }
+	diffArr(arr);
 }
+
+
+void getFFT(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr, unsigned int Ytr, int I, unsigned int J){
+    
+	// detekcja kszta³tu - wartoœci zapisuje do macierzy z których tworzy histogram
+	
+	double arr[HIST_VOL], oO = 0.0;
+    unsigned int i;
+    getFFT_(dst, Xbl, Ybl, Xtr, Ytr, arr, iNkar, oO);
+	lista->setOo(oO);
+	for(i = 0; i < HIST_VOL; i++){
+        lista->setFFTarr(arr[i]);
+    }
 
 
 
