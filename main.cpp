@@ -20,7 +20,7 @@ Image1CH tst(2600, 2460);
 Image3CH sym3(SYM_W, SYM_H);
 Image1CH sym1(SYM_W, SYM_H);
 
-list* List;
+list* listA;
 unsigned int xofst[8], yofst[8];
 double symHistS[4][HIST_VO_];
 double oOhistS[4][2];
@@ -126,8 +126,6 @@ void getFFT_(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr
     }
 	diffArr(arr);
 }
-
-
 void getFFT(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr, unsigned int Ytr, int I, unsigned int J){
     
 	// detekcja kszta³tu - wartoœci zapisuje do macierzy z których tworzy histogram
@@ -139,6 +137,12 @@ void getFFT(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr,
 	for(i = 0; i < HIST_VOL; i++){
         lista->setFFTarr(arr[i]);
     }
+    for(i = 0; i < HIST_VOL; i++){
+        tst.DrawPoint(i + I*519, J*202 + ((int)floor(/*lista->getFFTarr[i]*/arr[i] * 200.0)));
+    }
+   //tst.ShowImage("FFT");		// wyœwietla histogram
+	
+}
 
 
 
