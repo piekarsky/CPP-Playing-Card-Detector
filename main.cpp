@@ -140,7 +140,7 @@ void getFFT(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr,
     for(i = 0; i < HIST_VOL; i++){
         tst.DrawPoint(i + I*519, J*202 + ((int)floor(/*lista->getFFTarr[i]*/arr[i] * 200.0)));
     }
-   //tst.ShowImage("FFT");		// wyœwietla histogram
+   //tst.ShowImage("FFT");		// display the histogram
 	
 }
 
@@ -152,7 +152,7 @@ double getD2(double arr[HIST_VOL][2], double x, double y){
     unsigned int i;
     for(i = 0; i < HIST_VOL; i++){
         t = dist(x, y, arr[i][0], arr[i][1]);			
-        sM += t; ar[i] = t;							// sumuje punkty bêd¹ce na obrze¿u karty
+        sM += t; ar[i] = t;							// add up the points at the edge of the card
     }
 
 
@@ -256,14 +256,15 @@ unsigned int findSign(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigne
 	}
 
 	
-	// del to metoda, która usuwa zbêdne symbole kart (te które s¹ za ma³e) 
+	// del is a method that removes redundant card symbols (those that are too small)
 	bool goL = true; unsigned int ccc = lista->cntInKart(Id), mxx = lista->getMax(Id);
 	if(ccc > 0){
         double SD = lista->getSD(Id);
         lista->bot(Id);
 
-		// jezeli ró¿nica pomiêdzy symbolem maksymalnym (symbolem, który ma najwiêksz¹ œrednicê),  
-		// a badanym symbolem jest wiêksza od odchylenia standardowego to usuwa taki symbol
+		
+	// if the difference between the maximum symbol (the symbol with the largest diameter),
+	// and the tested symbol is greater than the standard deviation, it removes the symbol
 
 		while(goL){
             // cout << " SD = " << SD << " mxx = " << mxx << " Rad = " << lista->getRad() << endl;
@@ -515,7 +516,7 @@ int main(){
 	setArOfs();
 	setSymArr(); 
 		
-	in.LoadImage("img\\ideal.jpg", LPL_LOAD_FITTED);		 // wczytanie idealnego zdjêcia
+	in.LoadImage("img\\ideal.jpg", LPL_LOAD_FITTED);		 // load the perfect photo
 	in.ShowImage("Original");
 	
 	grayscale(in, dst);
