@@ -27,9 +27,10 @@ double oOhistS[4][2];
 
 
 /*
-this function converts the image to grayscale
+this function converts an image to grayscale
 */
 void grayscale(Image3CH & in, Image1CH & out) {			
+	
 	for (int i = 0; i < in.width(); i++) {
 		for (int j = 0; j < in.height(); j++) {
 			out(i, j).Intensity() = (in(i, j).Red() + in(i, j).Green() + in(i, j).Blue()) / 3;
@@ -40,9 +41,10 @@ void grayscale(Image3CH & in, Image1CH & out) {
 
 
 /*
-this function performs image  thresholding
+this function performs an image thresholding
 */
 void binarization(Image1CH & in) {					
+	
 	for (int i = 0; i < in.width(); i++) {
 		for (int j = 0; j < in.height(); j++) {
 			if (in(i, j).I() > 0.451) {
@@ -58,46 +60,47 @@ void binarization(Image1CH & in) {
 
 
 void diffArr(double* arr) {
+	
 	for (unsigned int i = 0; i < HIST_VOL - 1; i++)arr[i] = arr[i + 1] - arr[i];
 }
 
 
 
 double dist(double xt, double yt, double xt1, double yt1) {
+	
 	double t = xt - xt1, s = yt - yt1;
 	return pow(t * t + s * s, 0.5);
 }
 
 
 /*
-
-creating a distance function (along the radii) of the pattern shape from the center of the rectangle that encompasses the symbol
-
+this function creates a distance function (along the radius) of a symbol shape from the center of a rectangle that includes a symbol
 */
 void getFFT_(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr, unsigned int Ytr, double arr[HIST_VOL], double ColBor, double &oO){
+                 
 	double  Y, t, _Y, xt = -1.0, yt = -1.0, fi, x, y, xt1 = -1.0, yt1 = -1.0,
-            xo = (double)Xbl + ((double)Xtr - (double)Xbl) * 0.5,		 // xo, yo - wspó³rzêdne œrodka geometrycznego prostok¹ta obejmuj¹cego symbol
-            yo = (double)Ybl + ((double)Ytr - (double)Ybl) * 0.5,		 
-            PI2 = 2.0f*M_PI, Astep = PI2/(double)HIST_VOL, Pstep = Astep, Rad = 0.0;
-    unsigned int i, w, h, k = 0;
-    bool go;
+                 xo = (double)Xbl + ((double)Xtr - (double)Xbl) * 0.5,	// xo, yo - coordinates of the geometric center of a rectangle enclosing a symbol
+                 yo = (double)Ybl + ((double)Ytr - (double)Ybl) * 0.5,		 
+                 PI2 = 2.0f*M_PI, Astep = PI2/(double)HIST_VOL, Pstep = Astep, Rad = 0.0;
+                 unsigned int i, w, h, k = 0;
+                 bool go;
 
 
-	// Astep to PI2 przez dok³adnoœæ z jak¹ te promienie s¹ wyznaczone (k¹t o jaki przesuwa promieñ)
+	// Astep to PI2 by the accuracy with which these rays are determined (the angle by which the radius moves)
 
 	for(i = 0; i < HIST_VOL; i++){
-		fi = Astep * (double)i;				  // k¹ty s¹ proporcjonalne do [i]
-        x = cos(fi) + xo; y = sin(fi) + yo;
-        go = true;
+		fi = Astep * (double)i;		    // angles are proportional to [i]
+        		x = cos(fi) + xo; y = sin(fi) + yo;
+      		go = true;
 		t = Pstep;
-        while(go){
-			xt = xo + t*(x - xo);		      // xt, yt - wspó³rzêdne punktu na promieniu
-            yt = yo + t*(y - yo);		
+        		while(go){
+			xt = xo + t*(x - xo);		     // xt, yt - coordinates of a point on a radiusu
+            			yt = yo + t*(y - yo);		
 
-			w = (unsigned int)floor(xt);	  // xt, yt - wspó³rzêdne rzeczywiste punktu na promieniu
-            h = (unsigned int)floor(yt);	
+			w = (unsigned int)floor(xt);	     // xt, yt - real coordinates of a point on a radius
+         			h = (unsigned int)floor(yt);	
 
-			// prowadzi detekcjê kszta³tu
+			// performs shape detection
 			if (w < Xbl || w > Xtr || h < Ybl || h >Ytr) {
 				arr[i] = _Y;
 				xt = xt1; yt = yt1;
@@ -111,9 +114,9 @@ void getFFT_(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr
 					go = false;
 				} else {
 					t += Pstep;
-				}
-            }
-        }
+				  }
+           			 }
+	}
 		if (xt  < 0.0) { xt = 0.0; yt = 0.0; }
 		if (xt1 < 0.0) { xt1 = xt; yt1 = yt; }
 		oO += dist(xt, yt, xt1, yt1);
@@ -126,6 +129,9 @@ void getFFT_(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr
     }
 	diffArr(arr);
 }
+
+
+
 void getFFT(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr, unsigned int Ytr, int I, unsigned int J){
     
 	// detekcja kszta³tu - wartoœci zapisuje do macierzy z których tworzy histogram
@@ -140,10 +146,28 @@ void getFFT(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr,
     for(i = 0; i < HIST_VOL; i++){
         tst.DrawPoint(i + I*519, J*202 + ((int)floor(/*lista->getFFTarr[i]*/arr[i] * 200.0)));
     }
-   //tst.ShowImage("FFT");		// display the histogram
+   //tst.ShowImage("FFT");		// wyœwietla histogram
 	
 }
 
+/*
+funkcja liczaca odchylenie standardowe odleg³oœci p-któw brzegowych figury(arr) do punktu wnêtrza figury (p(x, y))
+= minimum dla œrodka figury 
+*/
+double getD2(double arr[HIST_VOL][2], double x, double y){
+   	double s = 0.0, t, sM = 0.0, ar[HIST_VOL];
+    unsigned int i;
+    for(i = 0; i < HIST_VOL; i++){
+        t = dist(x, y, arr[i][0], arr[i][1]);			
+        sM += t; ar[i] = t;							// sumuje punkty bêd¹ce na obrze¿u karty
+    }
+    sM /= (double)HIST_VOL;
+    for(i = 0; i < HIST_VOL; i++){
+        t = sM - ar[i];			
+        s += t*t;
+    }
+    return pow(s, 0.5);		// zwraca odchylenie standardowe
+}
 
 
 
