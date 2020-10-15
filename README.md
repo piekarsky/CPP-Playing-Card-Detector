@@ -3,7 +3,7 @@
 This program finds and recognizes playing cards not using an extra image processing library such as OpenCV. The program also calculates circuit of playing cards and determine the geometric center of cards. The program finds playing cards based on the 'flood filling' algorithm, which assumes that a certain set of points is given starter (grains, seeds), from which the growth of areas begins. 
 
 The most important functions in this program are:
-- Grayscale function <br/>
+- grayscale function <br/>
 The purpose of this function is to convert an original image to grayscale. Making an image in shades of gray is such a transformation image to get for each image pixel according to the brightness of a pixel such a share of each of these components alone. For this purpose, an image pixel is first read of a specific color with an appropriate share of each of the basic components and extracts the R, G, B components. Then the brightness of each color is summed basic and divides this sum completely by 3. After this operation, a synthesis should be made
 color from these three components. The operations are performed in a loop for each image pixel.
 The photo below shows an original image after conversion.
@@ -21,5 +21,19 @@ the color of the filled area. The pixel we start filling the area with (grain
 fill) must be inside the area to be filled. If the grain hits the
 'Fertile ground', it fills it with color and tries to further propagate in eight directions.
 This way the entire area will be painted over with the specified color. Thanks to the use of
-of this algorithm, the cards may be objects defined by rectangles.
+of this algorithm, the cards may be objects defined by rectangles. <br/>
 Source: www.eduinf.waw.pl/inf/utils/002_roz/2008_08.php
+
+-colorBorder function <br/>
+This function is to fill the area between the rectangle's edges and the outline playing
+cards in order to search each symbol in a specific area. After this function is used in the analyzed rectangle, only the card symbols are black.
+
+-findSign function <br/>
+The purpose of this function is to find and mark symbols on each playing card.
+Finding symbols is the same as finding cards, only an algorithm
+works inside each rectangle. As in these rectangles only the symbols are black
+the algorithm searches for black elements and fills them with white. This feature uses
+method of removing unnecessary elements - color microsymbols and card values. This method by calculating the diameter of all symbols on the card and their averages
+standard deviation. If the difference between the maximal element - the symbol,
+which has the largest diameter and the diameter of the test piece is greater than the deviation
+standard, such an element is removed.
