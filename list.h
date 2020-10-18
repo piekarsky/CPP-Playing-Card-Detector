@@ -6,9 +6,9 @@ class list {
   	public:
 		list();
         		virtual ~list();
-        		card* toP;			// wskaünik do elementu pierwszego
-        		card* boT;			// wskaünik do elementu ostatniego
-        		card* acT;			// act przy przesuwaniu ustawia na aktualny element, ktÛry wynika≥ z 'next' czy 'previous'
+        		card* toP;				// pointer to the first element
+        		card* boT;			// pointer to the last element
+        		card* acT;			// act on shift sets to the current element that resulted from 'next' or 'previous'
 
         		unsigned int Id;
         		double stepHST;
@@ -16,8 +16,8 @@ class list {
 
 
 
-        		bool top();			 // idü na koniec
-       	 	bool bot();			 // idü na poczatek
+        		bool top();			 // go to the end
+       	 	bool bot();			 // go to the beginning
         		bool prev();
         		bool next();
         		bool empty();
@@ -26,16 +26,16 @@ class list {
         		void list::setCardColor(int Card);
         		void list::setColor(int Card);
         		int list::getCard();
-        		int list::getKolor();
+        		int list::getCardColor();
         		int list::getColor();
 
         		bool next(unsigned int inCard); 
     		bool bot(unsigned int inCard);
 
-        		unsigned int getId();			// pobera id karty
-        		bool goId(unsigned int Id);			// wykonuje skok do okreúlonego id
-       		bool del(unsigned int Id);			// usuwa element z listy o konkretnym id
-     		bool del();				// usuwa act
+        		unsigned int getId();			// download the card id
+        		bool goId(unsigned int Id);		// jumps to the specified id
+       		bool del(unsigned int Id);		// removes an item from the list with a specific id
+     		bool del();				
 		
         		unsigned int getRad();
     		unsigned int getCard();
@@ -54,7 +54,7 @@ class list {
 		void getC(double &xC, double &yC);
 		double getAr();
 		double getOo();
-      		bool findCard(int karta, int kolor);	
+      		bool findCard(int card, int color);	
     protected:
     private:
 };
