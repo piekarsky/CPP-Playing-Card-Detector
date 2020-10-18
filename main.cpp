@@ -487,7 +487,7 @@ unsigned int setKarKol_(unsigned int Id){      // identyfikuje symbole poprzez p
         }
 		for (i = 0; i < 4; i++) {										
 			if (T[i] < ccC) {
-				i0 = i; ccC = T[i];									   // znajduje wartoœæ najmniejsz¹
+				i0 = i; ccC = T[i];							   // znajduje wartoœæ najmniejsz¹
 			}														   // i0 - wskazany symbol
 		}
     }
@@ -495,19 +495,20 @@ unsigned int setKarKol_(unsigned int Id){      // identyfikuje symbole poprzez p
 }
 
 
-void setKarKol(){
+void setCarCol(){
 	int i0;
 	bool goL = true;
-    unsigned int xbl, ybl, xtr, ytr, iD;
-    if(lista->bot(0)){
-        while(goL){
-            lista->get(xbl, ybl, xtr, ytr, iD);
-            i0 = setKarKol_(iD);
-            lista->goId(iD);
-			lista->setKolor(i0);
-            goL = lista->next(0);
-        }
-    }
+   	unsigned int xbl, ybl, xtr, ytr, iD;
+  	  
+	if(listA->bot(0)){
+       		 while(goL){
+         		  	lista->get(xbl, ybl, xtr, ytr, iD);
+           			i0 = setCarCol_(iD);
+          			listA->goId(iD);
+			listA->setColor(i0);
+          			goL = listA->next(0);
+      		  }
+  	 }
 }
 
 
@@ -534,13 +535,13 @@ int main(){
 	// 2 trefl [9]
 	// 3 karo  [8]
 	
-	printf("Kolor 0 = pik \nKolor 1 = kier \nKolor 2 = trefl \nKolor 3 = karo\n"); 
+	printf("Color 0 = spade \nColor 1 =heart \nColor 2 = club \nColor 3 = diamond\n"); 
 
-	lista = new listA();
+	listA = new list();
 	setArOfs();
 	setSymArr(); 
 		
-	in.LoadImage("img\\ideal.jpg", LPL_LOAD_FITTED);		 // load the perfect photo
+	in.LoadImage("img\\ideal.jpg", LPL_LOAD_FITTED);		 // load an original image
 	in.ShowImage("Original");
 	
 	grayscale(in, dst);
