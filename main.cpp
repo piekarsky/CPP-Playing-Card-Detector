@@ -467,30 +467,30 @@ void findCard(Image1CH &dst){
             xtr += 2; ytr += 2;
 			xbl -= 2; ybl -= 2;
 			
-			
+/*
+function indentifies symbols by comparing the pattern and symbol histograms on the card
+*/			
 
-unsigned int setKarKol_(unsigned int Id){      // identyfikuje symbole poprzez porównanie histogramów wzorca i symbolu z karty
+unsigned int setCarCol_(unsigned int Id){      
 	bool goL = true;
-    double T[4];
+	double T[4];
 	int i0 = -1;
 	unsigned int i, k = 0, ccC = 10000;
-    for (i = 0; i < 4; i++)T[i] = 0.0;
-    if(lista->bot(Id)){
-		
-        k = 0;
-        while(goL){
-            for (i = 0; i < 4; i++) {								   // testD2 sprawdza ró¿nice pomiêdzy danym symbolem, a wzorcem
-				T[i] += lista->testD2(lista->acT->ffT, symHistS[i]);   // symHist[i] - histogramy wzorców
-            }														   // ffT - histogram dla ka¿dego symbolu z listy
-            goL = lista->next(Id);
-            k++;
-        }
-		for (i = 0; i < 4; i++) {										
-			if (T[i] < ccC) {
-				i0 = i; ccC = T[i];							   // znajduje wartoœæ najmniejsz¹
-			}														   // i0 - wskazany symbol
+	for (i = 0; i < 4; i++)T[i] = 0.0;
+	if(lista->bot(Id)){
+	k = 0;
+        		while(goL){
+            			for (i = 0; i < 4; i++) {			         //testD2 checks for differences between the given symbol and the pattern
+				T[i] += listA->testD2(listA->acT->ffT, symHistS[i]);     // symHist [i] - pattern histograms
+           			 }														      		goL = lista->next(Id);
+            			k++;
+      		  }
+	for (i = 0; i < 4; i++) {										
+		if (T[i] < ccC) {
+			i0 = i; ccC = T[i];				       // finds the smallest value
+			}														   
 		}
-    }
+    	}
 	return i0;
 }
 
@@ -502,7 +502,7 @@ void setCarCol(){
   	  
 	if(listA->bot(0)){
        		 while(goL){
-         		  	lista->get(xbl, ybl, xtr, ytr, iD);
+         		  	listA->get(xbl, ybl, xtr, ytr, iD);
            			i0 = setCarCol_(iD);
           			listA->goId(iD);
 			listA->setColor(i0);
@@ -530,12 +530,8 @@ void setArOfs(){
 
 int main(){
 
-	// 0 pik   [2]
-	// 1 kier  [7]
-	// 2 trefl [9]
-	// 3 karo  [8]
 	
-	printf("Color 0 = spade \nColor 1 =heart \nColor 2 = club \nColor 3 = diamond\n"); 
+	printf("Color 0 = Spade \nColor 1 =Heart \nColor 2 = Club \nColor 3 = Diamond\n"); 
 
 	listA = new list();
 	setArOfs();
@@ -546,6 +542,26 @@ int main(){
 	
 	grayscale(in, dst);
 	binarization(dst);
+	findCard(dst);
+	setCarCol();
+	print();
+
+	// mark the center of the 9 clubs card
+	if (listA->findCard(9, 2)) {
+		double xC, yC;
+		listA->getC(xC, yC);
+		printf("\nCard = %1d Color = %1d\nThe circumference of the card is %5.3f\nThe coordinates of the center of the card 
+		oX = %5.1f  oY = %5.1f\n", listA->getCard(), listA->getColor(), listA->getOo(), xC, yC);
+		in.DrawPoint(xC, yC, 1, 0, 0);
+		
+	}
+	else {
+		printf("Card not found");
+	}
+	system("pause");
+
+	in.ShowImage("Original image with the center of the card");       // displays the original image with the center of the card selected
+
 	
 	return 0;
 }
