@@ -548,7 +548,7 @@ void print() {
 	goL = true;
 	
 
-	printf("Liczba wszystkich kart na zdjeciu: %1d\nliczba wszystkich symboli na zdjeciu: %1d\n", lk, ls);
+	printf("Total number of cards in the photo: %1d\n Total number of all symbols in the photo: %1d\n", lk, ls);
 
 }
 
