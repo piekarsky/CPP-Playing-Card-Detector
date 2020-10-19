@@ -526,6 +526,34 @@ void setArOfs(){
 
 
 
+/* 
+function writes for symbols (separately for each card) the circumference, area and area / circumference ratio,
+and also lists the total number of cards and the total number of symbols in the photo
+ */
+void print() {		 
+	bool goL = true, go;
+	unsigned int Id;
+	int lk = 0, ls = 0;			 // card and symbol counter
+	double xC, yC;
+	if (lista->bot(0)) {
+		while (goL) {
+			lista->getC(xC, yC);
+			printf("Card = %1d  Color = %1d \tCircumference = %6.3f\t  oX = %4.1f  oY = %4.1f\n", listA->getCard(), 
+			listA->getColor(), listA->getOo(),  xC, yC);Id = listA->getId();
+			go = true;
+			lk++;
+		
+
+	}
+	goL = true;
+	
+
+	printf("Liczba wszystkich kart na zdjeciu: %1d\nliczba wszystkich symboli na zdjeciu: %1d\n", lk, ls);
+
+}
+
+
+
 
 
 int main(){
