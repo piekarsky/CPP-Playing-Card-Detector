@@ -495,6 +495,9 @@ unsigned int setCarCol_(unsigned int Id){
 }
 
 
+
+
+
 void setCarCol(){
 	int i0;
 	bool goL = true;
@@ -512,7 +515,35 @@ void setCarCol(){
 }
 
 
+*/
+void setSymArr() {			
+	char symb[200];
+	double symH_arr[HIST_VOL], oO = 0.0;
 
+	unsigned int i, j, aR=0;
+	for (i = 0; i < 4; i++) {			//color number [0, 1, 2, 3]
+		for(j = 0; j < HIST_VO_; j++){
+            symHistS[i][j] = 0.0;		 //histogramy wzorców
+		}
+		sprintf(symb, "img\\sym%d.jpg", i);
+
+
+
+
+
+/*
+tr = top right
+bl = bottom left
+						xtr, ytr
+		__________________________  A
+		|   |  x| x |x |   |   |    |
+		--------------------------  |
+		|   |  x| o |x |   |   |    |
+		--------------------------  |
+		|   |  x| x |x |   |   |    |
+		--------------------------  |
+		xbl, ybl                    Y
+											 */
 void setArOfs(){
 	xofst[0] =  1; yofst[0] = -1;
 	xofst[1] =  1; yofst[1] =  0;
