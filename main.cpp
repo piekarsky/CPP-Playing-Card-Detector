@@ -291,17 +291,7 @@ unsigned int findSign(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigne
 	// and the tested symbol is greater than the standard deviation, it removes the symbol
 
 		while(goL){
-            // cout << " SD = " << SD << " mxx = " << mxx << " Rad = " << lista->getRad() << endl;
-            if((double)(mxx - lista->getRad()) > SD){
-                lista->del();
-                if(!lista->bot(Id)){
-                    break;
-                }
-            } else {
-                goL = lista->next(Id);
-            }
-        }
-		
+          
         if(lista->bot(Id)){
             goL = true;
             while(goL){
@@ -314,8 +304,7 @@ unsigned int findSign(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigne
 				// zaznacza symbole na poszczególnych kartach
                 dst.DrawLine(xbl, ybl, xtr, ybl, iNkli);
                 dst.DrawLine(xbl, ybl, xbl, ytr, iNkli);
-                dst.DrawLine(xtr, ybl, xtr, ytr, iNkli);
-                dst.DrawLine(xtr, ytr, xbl, ytr, iNkli);
+                
 
 
                 if(++I == 5){
@@ -324,29 +313,8 @@ unsigned int findSign(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigne
                         J = 0;
                     }
                 }
-                goL = lista->next(Id);
-            }
-        }
-    }
-	return ccC;
-}
+          
 
-
-unsigned int findSignSym(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr, unsigned int Ytr) {
-	stack<unsigned int> stos;
-	int x0 = -1, y0 = -1;
-	unsigned int x, y, x1, y1, i, j, k, aR;
-	bool go = true;
-	for (i = Xbl; i <= Xtr; i++) {
-		if (!go)break;
-		for (j = Ybl; j <= Ytr; j++) {
-			if (dst(i, j).I() < 0.3) {
-				y0 = j; x0 = i;
-				go = false;
-				break;
-			}
-		}
-	}
 
 
 
@@ -355,15 +323,14 @@ funkcja znajduje karty i zakreœla je prostok¹tami
 */
 void findCard(Image1CH &dst){		
 	/*
-					xtr, ytr
-	__________________________  A
-	|   |  x| x |x |   |   |    |
-	--------------------------  |
-	|   |  x| o |x |   |   |    |
-	--------------------------  |
-	|   |  x| x |x |   |   |    |
-	--------------------------  |
-	xbl, ybl                    Y
+		   xtr, ytr
+	|   |  x| x |x |   |
+	-----------------
+	|   |  x| o |x |   |
+	-----------------
+	|   |  x| x |x |   |
+	-----------------
+	xbl, ybl                    
 	x ---------------------->>
 	
 */
