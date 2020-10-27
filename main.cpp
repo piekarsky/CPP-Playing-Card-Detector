@@ -290,30 +290,6 @@ unsigned int findSign(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigne
 	// if the difference between the maximum symbol (the symbol with the largest diameter),
 	// and the tested symbol is greater than the standard deviation, it removes the symbol
 
-		while(goL){
-          
-        if(lista->bot(Id)){
-            goL = true;
-            while(goL){
-				ccC++;
-                lista->get(xbl, ybl, xtr, ytr,iD);
-                xtr += 2; ytr += 2;
-                xbl -= 2; ybl -= 2;
-                getFFT(dst, xbl, ybl, xtr, ytr, I, J);
-
-				// zaznacza symbole na poszczególnych kartach
-                dst.DrawLine(xbl, ybl, xtr, ybl, iNkli);
-                dst.DrawLine(xbl, ybl, xbl, ytr, iNkli);
-                
-
-
-                if(++I == 5){
-                    I = 0;
-                    if(++J == 12){
-                        J = 0;
-                    }
-                }
-          
 
 
 
