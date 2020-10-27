@@ -373,24 +373,24 @@ void findCard(Image1CH &dst){
 
 	unsigned int ccC;
 	stack<unsigned int> stos;
-    bool go = true, goKart = true;
+    	bool go = true, goKart = true;
 	int x0 = -1, y0 = -1;
 	double intens = 0.0;
 	unsigned int x, y, x1, y1, i, j, k, xbl, ybl, xtr, ytr, iD, I = 0, J = 0;
 	while(goKart){			 // znajduje ziarno
-        go = true;
-        for (i = 0; i < dst.width(); i++) {
-            if (go) {
-                for (j = 0; j < dst.height(); j++) {
-                    if (dst(i, j).I() > 0.8) {
-                        intens = 0.0;
-                        for (int n = 0; n < 5; n++) {
-                            for (int m = 0; m < 5; m++) {
-                                intens += dst((i  > n-2) ? i-n + 2: i, (j > m-2) ? j - m+2 : j).I();
-                            }
-                        }
-                        if(intens > 5.0){
-                            y0 = j; x0 = i;				// x0, y0 - wspó³rzêdne ziarna
+        	go = true;
+        	for (i = 0; i < dst.width(); i++) {
+            		if (go) {
+                			for (j = 0; j < dst.height(); j++) {
+                    			if (dst(i, j).I() > 0.8) {
+                       			intens = 0.0;
+                       			for (int n = 0; n < 5; n++) {
+                            				for (int m = 0; m < 5; m++) {
+                                					intens += dst((i  > n-2) ? i-n + 2: i, (j > m-2) ? j - m+2 : j).I();
+                            				}
+                        			}
+                        			if(intens > 5.0){
+                            				y0 = j; x0 = i;	 	// x0, y0 - wspó³rzêdne ziarna
                             go = false; break;
                         }
 
@@ -466,7 +466,38 @@ void findCard(Image1CH &dst){
             lista->get(xbl, ybl, xtr, ytr, iD);
             xtr += 2; ytr += 2;
 			xbl -= 2; ybl -= 2;
-			
+
+	colorBorder(dst, xbl, ybl, xtr, ytr);   	 // wype³nia obszary pomiêdzy krawêdziami prostokata, a konturem karty
+	dst.DrawLine(xbl, ybl, xtr, ybl, iNkli);
+	dst.DrawLine(xbl, ybl, xbl, ytr, iNkli);
+	dst.DrawLine(xtr, ybl, xtr, ytr, iNkli);
+	dst.DrawLine(xtr, ytr, xbl, ytr, iNkli);
+	lista->goId(iD);
+	goL = lista->next(0);
+        }
+    }
+	
+    dst.ShowImage("Playing card detection");
+
+	goL = true;
+    if(lista->bot(0)){
+		unsigned int aR = 0;
+		double oO, X, Y;
+		while(goL){
+			lista->get(xbl, ybl, xtr, ytr, iD);
+            			ccC = findSign(dst, xbl, ybl, xtr, ytr, iD, I, J);
+			findCont(dst, xbl, ybl, xtr, ytr, oO, X, Y);
+            			listA->goId(iD);
+			listA->setCart(ccC);
+			listA->setOo(oO);
+			listA->setC(X, Y);
+            			goL = listA->next(0);
+        		}
+    }
+    dst.ShowImage("Symbol detection");
+
+
+		
 /*
 function indentifies symbols by comparing the pattern and symbol histograms on the card
 */			
@@ -479,12 +510,12 @@ unsigned int setCarCol_(unsigned int Id){
 	for (i = 0; i < 4; i++)T[i] = 0.0;
 	if(lista->bot(Id)){
 	k = 0;
-        		while(goL){
-            			for (i = 0; i < 4; i++) {			         //testD2 checks for differences between the given symbol and the pattern
-				T[i] += listA->testD2(listA->acT->ffT, symHistS[i]);     // symHist [i] - pattern histograms
-           			 }														      		goL = lista->next(Id);
-            			k++;
-      		  }
+        	while(goL){
+            		for (i = 0; i < 4; i++) {			         //testD2 checks for differences between the given symbol and the pattern
+			T[i] += listA->testD2(listA->acT->ffT, symHistS[i]);     // symHist [i] - pattern histograms
+           		}														      		goL = lista->next(Id);
+            		k++;
+      	}
 	for (i = 0; i < 4; i++) {										
 		if (T[i] < ccC) {
 			i0 = i; ccC = T[i];				       // finds the smallest value
@@ -523,7 +554,7 @@ void setSymArr() {
 	unsigned int i, j, aR=0;
 	for (i = 0; i < 4; i++) {			//color number [0, 1, 2, 3]
 		for(j = 0; j < HIST_VO_; j++){
-            symHistS[i][j] = 0.0;		 //histogramy wzorców
+            			symHistS[i][j] = 0.0;		// pattern histograms
 		}
 		sprintf(symb, "img\\sym%d.jpg", i);
 
@@ -534,15 +565,14 @@ void setSymArr() {
 /*
 tr = top right
 bl = bottom left
-						xtr, ytr
-		__________________________  A
-		|   |  x| x |x |   |   |    |
+			      xtr, ytr
+		|   |  x| x |x |   |       
 		--------------------------  |
-		|   |  x| o |x |   |   |    |
+		|   |  x| o |x |   |       
 		--------------------------  |
-		|   |  x| x |x |   |   |    |
+		|   |  x| x |x |   |   
 		--------------------------  |
-		xbl, ybl                    Y
+	           xbl, ybl                    
 											 */
 void setArOfs(){
 	xofst[0] =  1; yofst[0] = -1;
@@ -558,8 +588,8 @@ void setArOfs(){
 
 
 /* 
-function writes for symbols (separately for each card) the circumference, area and area / circumference ratio,
-and also lists the total number of cards and the total number of symbols in the photo
+function writes (separately for each card) circumference, area and area / circumference ratio for symbols
+and also lists total number of cards and total number of symbols in the photo
  */
 void print() {		 
 	bool goL = true, go;
