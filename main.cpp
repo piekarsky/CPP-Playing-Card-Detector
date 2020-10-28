@@ -501,7 +501,21 @@ void setSymArr() {
 		}
 		sprintf(symb, "img\\sym%d.jpg", i);
 
+		sym3.LoadImage(symb, LPL_LOAD_FITTED);
+		grayscale(sym3, sym1);
+		binarization(sym1);
 
+		getFFT_(sym1, 2, 2, SYM_W - 2, SYM_H - 2, symH_arr, 1.0, oO);		 // funkcja, która 'liczy' krzyw¹ konturu i obwód symbolu
+		oOhistS[i][0] = oO;
+		// sym1.ShowImage("Original");
+		aR = findSignSym(sym1, 1, 1, SYM_W-1, SYM_H-1);
+		oOhistS[i][1] = (double)aR;
+	
+		for(j = 0; j < HIST_VOL; j++){
+            lista->setFFTarr_(symH_arr[j], symHistS[i]);
+		}
+	}
+}
 
 
 
