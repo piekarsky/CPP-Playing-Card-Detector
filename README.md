@@ -2,11 +2,18 @@
 
 This program finds and recognizes playing cards not using an extra image processing library such as OpenCV. The program also calculates circuit of playing cards and determine the geometric center of cards. The program finds playing cards based on the 'flood filling' algorithm, which assumes that a certain set of points is given starter (grains, seeds), from which the growth of areas begins. 
 
+The operation of the program is shown in the example photo below
+<img src = img/ideal.jpg/>
+
+
 The most important functions in this program are:
 - grayscale function <br/>
 The purpose of this function is to convert an original image to grayscale. Making an image in shades of gray is such a transformation image to get for each image pixel according to the brightness of a pixel such a share of each of these components alone. For this purpose, an image pixel is first read of a specific color with an appropriate share of each of the basic components and extracts the R, G, B components. Then the brightness of each color is summed basic and divides this sum completely by 3. After this operation, a synthesis should be made
 color from these three components. The operations are performed in a loop for each image pixel.
 The photo below shows an original image after conversion.
+<img src = img/gray.jpg/>
+
+
 
 
 - binarization function <br/>
