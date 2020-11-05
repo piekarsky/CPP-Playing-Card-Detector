@@ -3,7 +3,7 @@
 This program finds and recognizes playing cards not using an extra image processing library such as OpenCV. The program also calculates circuit of playing cards and determine the geometric center of cards. The program finds playing cards based on the 'flood filling' algorithm, which assumes that a certain set of points is given starter (grains, seeds), from which the growth of areas begins. 
 
 The operation of the program is shown in the example photo below
-<img src = img/ideal.jpg/>
+<img width="550" height="400" src = img/ideal.jpg/>
 
 
 The most important functions in this program are:
@@ -11,13 +11,16 @@ The most important functions in this program are:
 The purpose of this function is to convert an original image to grayscale. Making an image in shades of gray is such a transformation image to get for each image pixel according to the brightness of a pixel such a share of each of these components alone. For this purpose, an image pixel is first read of a specific color with an appropriate share of each of the basic components and extracts the R, G, B components. Then the brightness of each color is summed basic and divides this sum completely by 3. After this operation, a synthesis should be made
 color from these three components. The operations are performed in a loop for each image pixel.
 The photo below shows an original image after conversion.
-<img src = img/gray.jpg/>
+<img width="550" height="400" src = img/gray.jpg/>
 
 
 
 
 - binarization function <br/>
 The purpose of this function is to separate the foreground objects from the background. It designates for the image brightness threshold, and then pixels brighter than the threshold set are given one value, and the darker ones another. In this program, this function assigns an intensity value 1 pixels whose intensity is greater than 0.45 and assigns a value of 0 to others.
+<img width="550" height="400" src = img/gray.jpg/>
+
+
 
 - findCard function <br/>
 The purpose of this function is to find and circle playing cards. The feature of finding cards is based on the 'flood filling' algorithm, which assumes that a certain set of points is given starter (grains, seeds), from which the growth of areas begins. Given attachment point
@@ -30,6 +33,11 @@ fill) must be inside the area to be filled. If the grain hits the
 This way the entire area will be painted over with the specified color. Thanks to the use of
 of this algorithm, the cards may be objects defined by rectangles. <br/>
 Source: www.eduinf.waw.pl/inf/utils/002_roz/2008_08.php
+
+<img width="550" height="400" src = img/floodfill.jpg/>
+
+
+
 
 -colorBorder function <br/>
 This function is to fill the area between the rectangle's edges and the outline playing
