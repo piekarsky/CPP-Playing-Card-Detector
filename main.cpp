@@ -383,8 +383,7 @@ void findCard(Image1CH &dst){
 
 	dst.ShowImage("Playing card detection");		 
 
-	goL = true;
-    while(goL){
+	    while(goL){
         goL = lista->bot() && goL;
         if(goL){
             goD = true;
@@ -409,14 +408,16 @@ void findCard(Image1CH &dst){
             lista->get(xbl, ybl, xtr, ytr, iD);
             xtr += 2; ytr += 2;
 			xbl -= 2; ybl -= 2;
-
-	colorBorder(dst, xbl, ybl, xtr, ytr);   	 // wype³nia obszary pomiêdzy krawêdziami prostokata, a konturem karty
-	dst.DrawLine(xbl, ybl, xtr, ybl, iNkli);
-	dst.DrawLine(xbl, ybl, xbl, ytr, iNkli);
-	dst.DrawLine(xtr, ybl, xtr, ytr, iNkli);
-	dst.DrawLine(xtr, ytr, xbl, ytr, iNkli);
-	lista->goId(iD);
-	goL = lista->next(0);
+			
+			
+			
+			colorBorder(dst, xbl, ybl, xtr, ytr);   	 // wype³nia obszary pomiêdzy krawêdziami prostokata, a konturem karty
+            dst.DrawLine(xbl, ybl, xtr, ybl, iNkli);
+            dst.DrawLine(xbl, ybl, xbl, ytr, iNkli);
+            dst.DrawLine(xtr, ybl, xtr, ytr, iNkli);
+            dst.DrawLine(xtr, ytr, xbl, ytr, iNkli);
+            lista->goId(iD);
+            goL = lista->next(0);
         }
     }
 	
@@ -426,18 +427,18 @@ void findCard(Image1CH &dst){
     if(lista->bot(0)){
 		unsigned int aR = 0;
 		double oO, X, Y;
-		while(goL){
-			lista->get(xbl, ybl, xtr, ytr, iD);
-            			ccC = findSign(dst, xbl, ybl, xtr, ytr, iD, I, J);
+        while(goL){
+            lista->get(xbl, ybl, xtr, ytr, iD);
+            ccC = findSign(dst, xbl, ybl, xtr, ytr, iD, I, J);
 			findCont(dst, xbl, ybl, xtr, ytr, oO, X, Y);
-            			listA->goId(iD);
-			listA->setCart(ccC);
-			listA->setOo(oO);
-			listA->setC(X, Y);
-            			goL = listA->next(0);
-        		}
-    }
-    dst.ShowImage("Symbol detection");
+            lista->goId(iD);
+			lista->setKarta(ccC);
+			lista->setOo(oO);
+			lista->setC(X, Y);
+
+
+
+
 
 
 		
@@ -467,8 +468,6 @@ unsigned int setCarCol_(unsigned int Id){
     	}
 	return i0;
 }
-
-
 
 
 
@@ -560,14 +559,10 @@ void print() {
 			listA->getColor(), listA->getOo(),  xC, yC);Id = listA->getId();
 			go = true;
 			lk++;
-		
-
-	}
+		}
 	goL = true;
 	
-
 	printf("Total number of cards in the photo: %1d\n Total number of all symbols in the photo: %1d\n", lk, ls);
-
 }
 
 
