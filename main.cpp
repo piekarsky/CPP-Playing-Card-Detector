@@ -509,28 +509,29 @@ void setCarCol(){
 void setSymArr() {			
 	char symb[200];
 	double symH_arr[HIST_VOL], oO = 0.0;
-
 	unsigned int i, j, aR=0;
-	for (i = 0; i < 4; i++) {			//color number [0, 1, 2, 3]
-		for(j = 0; j < HIST_VO_; j++){
-            			symHistS[i][j] = 0.0;		// pattern histograms
-		}
-		sprintf(symb, "img\\sym%d.jpg", i);
-
-		sym3.LoadImage(symb, LPL_LOAD_FITTED);
-		grayscale(sym3, sym1);
-		binarization(sym1);
-
-		getFFT_(sym1, 2, 2, SYM_W - 2, SYM_H - 2, symH_arr, 1.0, oO);		// a function that counts the contour curve and perimete
-		oOhistS[i][0] = oO;
-		// sym1.ShowImage("Original");
-		aR = findSignSym(sym1, 1, 1, SYM_W-1, SYM_H-1);
-		oOhistS[i][1] = (double)aR;
 	
-		for(j = 0; j < HIST_VOL; j++){
-           		lista->setFFTarr_(symH_arr[j], symHistS[i]);
+		for (i = 0; i < 4; i++) {			//color number [0, 1, 2, 3]
+			for(j = 0; j < HIST_VO_; j++){
+            				symHistS[i][j] = 0.0;		// pattern histograms
+			}
+			
+			sprintf(symb, "img\\sym%d.jpg", i);
+
+			sym3.LoadImage(symb, LPL_LOAD_FITTED);
+			grayscale(sym3, sym1);
+			binarization(sym1);
+
+			getFFT_(sym1, 2, 2, SYM_W - 2, SYM_H - 2, symH_arr, 1.0, oO);	// a function that counts the contour curve and circuit
+			oOhistS[i][0] = oO;
+			// sym1.ShowImage("Original");
+			aR = findSignSym(sym1, 1, 1, SYM_W-1, SYM_H-1);
+			oOhistS[i][1] = (double)aR;
+	
+			for(j = 0; j < HIST_VOL; j++){
+           				lista->setFFTarr_(symH_arr[j], symHistS[i]);
+				}
 		}
-	}
 }
 
 
@@ -561,8 +562,8 @@ void setArOfs(){
 
 
 /* 
-function writes (separately for each card) circumference, area and area / circumference ratio for symbols
-and also lists total number of cards and total number of symbols in the photo
+function prints (separately for each card) circumference, area and area / circumference ratio for symbols
+and also total number of cards and total number of symbols in the photo
  */
 void print() {		 
 	bool goL = true, go;
@@ -616,10 +617,10 @@ int main(){
 	else {
 		printf("Card not found");
 	}
+	
 	system("pause");
 
-	in.ShowImage("Original image with the center of the card");       // displays the original image with the center of the card selected
+	in.ShowImage("Original image with the center of the card");       // displays the original image with the center of the selected card
 
-	
 	return 0;
 }
