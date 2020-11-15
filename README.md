@@ -4,7 +4,7 @@ This program finds and recognizes playing cards not using an extra image process
 
 
 An example photo showing the program operation is presented below
-<img width="550" height="400" src = img/ideal.jpg/>
+<img width="550" height="350" src = img/ideal.jpg/>
 <hr>
 
 The most important functions in this program are:
@@ -13,15 +13,14 @@ The purpose of this function is to convert an original image to grayscale. Makin
 color from these three components. The operations are performed in a loop for each image pixel.
 The photo below shows an original image after conversion.
 <img width="550" height="350" src = img/gray.jpg/>
-<hr>
-
+<br><br>
 
 
 - binarization function <br/>
 The purpose of this function is to separate the foreground objects from the background. It designates for the image brightness threshold, and then pixels brighter than the threshold set are given one value, and the darker ones another. In this program, this function assigns an intensity value 1 pixels whose intensity is greater than 0.45 and assigns a value of 0 to others.
 The photo below shows the original image after applying the thresholding
 <img width="550" height="350" src = img/bin.jpg/>
-<hr>
+<br><br>
 
 
 - findCard function <br/>
@@ -55,14 +54,17 @@ The picture below shows the original image after applying this function
 
 
 - findSign function <br/>
-The purpose of this function is to find and mark symbols on each card. Finding symbols is the same as finding cards, only an algorithm
+The purpose of this function is to find and mark symbols on each card. Finding symbols do the same as finding cards, only an algorithm
 works inside each rectangle. As in these rectangles only the symbols are black
 the algorithm searches for black elements and fills them with white. This feature uses
 method of removing unnecessary elements - color microsymbols and card values. Method
 it works by calculating the diameter of all symbols on the card and their averages
 standard deviation. If the difference between the maximal element is a symbol,
 which has the largest diameter and the diameter of the test piece is greater than the deviation
-standard, such an element is removed.
+standard, such an element is removed. The picture below is presented after applying the algorithm to search for black elements and fill them with white on the 7 of hearts card
+<img width="550" height="350" src = img/findsign.jpg/>
 
-The picture below shows an image after applying the colorBorder function
+The picture belos shows the image of selecting symbols and removing unnecessary elements on the 7 of hearts card
+<img width="550" height="350" src = img/findsign2.jpg/>
+
 <hr>
