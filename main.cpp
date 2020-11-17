@@ -351,13 +351,13 @@ void findCard(Image1CH &dst){
                         			}
                         			if(intens > 5.0){
                             				y0 = j; x0 = i;	 	// x0, y0 - wspó³rzêdne ziarna
-                            go = false; break;
-                        }
+                            				go = false; break;
+                        			}
 
-                    }
-                }
+                    		}
+                		}
 
-            }
+            	}
         }
 		
 		xbl = 10000; ybl = 10000; xtr = 0; ytr = 0; 
@@ -400,7 +400,8 @@ void findCard(Image1CH &dst){
 
 	dst.ShowImage("Playing card detection");		 
 
-	    while(goL){
+	   goL = true;
+    while(goL){
         goL = lista->bot() && goL;
         if(goL){
             goD = true;
@@ -452,17 +453,59 @@ void findCard(Image1CH &dst){
 			lista->setKarta(ccC);
 			lista->setOo(oO);
 			lista->setC(X, Y);
+            goL = lista->next(0);
+        }
+    }
+    dst.ShowImage("Symbol detection");
+	
+	
+}
+unsigned int setKarKol_(unsigned int Id){      // identyfikuje symbole poprzez porównanie histogramów wzorca i symbolu z karty
+	bool goL = true;
+    double T[4];
+	int i0 = -1;
+	unsigned int i, k = 0, ccC = 10000;
+    for (i = 0; i < 4; i++)T[i] = 0.0;
+    if(lista->bot(Id)){
+		
+        k = 0;
+        while(goL){
+            for (i = 0; i < 4; i++) {								   // testD2 sprawdza ró¿nice pomiêdzy danym symbolem, a wzorcem
+				T[i] += lista->testD2(lista->acT->ffT, symHistS[i]);   // symHist[i] - histogramy wzorców
+            }														   // ffT - histogram dla ka¿dego symbolu z listy
+            goL = lista->next(Id);
+            k++;
+        }
+		for (i = 0; i < 4; i++) {										
+			if (T[i] < ccC) {
+				i0 = i; ccC = T[i];									   // znajduje wartoœæ najmniejsz¹
+			}														   // i0 - wskazany symbol
+		}
+    }
+	return i0;
+}
 
 
-
-
+void setCarCol(){
+	int i0;
+	bool goL = true;
+    	unsigned int xbl, ybl, xtr, ytr, iD;
+   	 if(listA->bot(0)){
+        		while(goL){
+            		listA->get(xbl, ybl, xtr, ytr, iD);
+           		i0 = setCarCol_(iD);
+            		listA->goId(iD);
+		listA->setColor(i0);
+            		goL = listA->next(0);
+        		}
+    	}
+}
 
 
 		
 /*
 function indentifies symbols by comparing the pattern and symbol histograms on the card
 */			
-
 unsigned int setCarCol_(unsigned int Id){      
 	bool goL = true;
 	double T[4];
@@ -472,7 +515,7 @@ unsigned int setCarCol_(unsigned int Id){
 	if(lista->bot(Id)){
 	k = 0;
         	while(goL){
-            		for (i = 0; i < 4; i++) {			         //testD2 checks for differences between the given symbol and the pattern
+            		for (i = 0; i < 4; i++) {			                    //testD2 checks for differences between the given symbol and the pattern
 			T[i] += listA->testD2(listA->acT->ffT, symHistS[i]);     // symHist [i] - pattern histograms
            		}														      		goL = lista->next(Id);
             		k++;
@@ -530,7 +573,7 @@ void setSymArr() {
 	
 			for(j = 0; j < HIST_VOL; j++){
            				lista->setFFTarr_(symH_arr[j], symHistS[i]);
-				}
+			}
 		}
 }
 
@@ -547,7 +590,7 @@ bl = bottom left
 		|   |  x| x |x |   |   
 		--------------------------  |
 	           xbl, ybl                    
-											 */
+					*/
 void setArOfs(){
 	xofst[0] =  1; yofst[0] = -1;
 	xofst[1] =  1; yofst[1] =  0;
