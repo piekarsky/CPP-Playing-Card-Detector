@@ -21,6 +21,8 @@ class card {
         card();
         virtual ~card();
         unsigned int getRad();
+	int xc, yc;
+       int getArr();		
 
     protected:
     private:
