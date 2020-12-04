@@ -24,33 +24,37 @@ void list::push(unsigned int blX, unsigned int blY, unsigned int trX, unsigned i
 	// push - inserts a new element (bottomleft, topright and inCard)
 	
 	card* Card = new card();		 	 // initialize a new 'card' object
-    if(toP == 0)toP = karta;
-    Id++;					                   // increment the id
-    Card->blX = blX;
-    Card->blY = blY;
-    Card->trX = trX;
-    Card->trY = trY;
-    Card->next = boT;				  // card next = bot because it sets the pointer to the beginning
-    Card->Id   = Id;
-    Card->inCard  = inCard;
-    if(Card->next != 0)Card->next->prev = Card;
-    Card->prev  = 0;
-    Card->Card = 0;
-    boT = Card; 
-    acT = Card;					  // index to the created object tab
-    for(unsigned int i = 0; i < HIST_VO_; i++){
-        Card->ffT[i] = 0.0;				  // reset this matrix to add items to the histogram
-    }
+   	if(toP == 0)toP = karta;
+ 	Id++;					                   // increment the id
+  	Card->blX = blX;
+   	Card->blY = blY;
+   	Card->trX = trX;
+ 	Card->trY = trY;
+  	Card->next = boT;				  // card next = bot because it sets the pointer to the beginning
+ 	Card->Id   = Id;
+    	Card->inCard  = inCard;
+   	
+	if(Card->next != 0)Card->next->prev = Card;
+    	Card->prev  = 0;
+    	Card->Card = 0;
+   	boT = Card; 
+  	acT = Card;					  // index to the created object tab
+    	for(unsigned int i = 0; i < HIST_VO_; i++){
+        		Card->ffT[i] = 0.0;				  // reset this matrix to add items to the histogram
+  	}
 }
+
 bool list::top(){ 
-    bool re = true;;
-    if(boT != 0){
-        acT = toP;
-    } else {
-        re = false;			// the list is empty
-    }
-    return re;
+    	bool re = true;;
+    	if(boT != 0){
+       	 	acT = toP;
+    	} else {
+        		re = false;			// the list is empty
+  	 }
+    	return re;
 }
+
+
 bool list::bot(){
     bool re = true;
     if(boT != 0){
@@ -98,6 +102,17 @@ void list::get(unsigned int &blX, unsigned int &blY, unsigned int &trX, unsigned
 /*
 this function set the value to 2, 7, 8, 9
 */
-void list::setCard(int Card){	
-    acT->Card = Card;
-}	
+void list::setCard(int cardValue){	
+    acT->cardValue = Card;
+}
+
+void list::setCardColor(int cardValue){	 // ustawia kolor karty 0, 1, 2, 3
+    acT->cardValue = Card;
+}
+void listA::setColor(int color){	 // ustawia kolor 0, 1 [czarny, czerwony]
+    acT->Color = Card;
+}
+
+int listA::getCard(){			     // pobiera jaka jest wartość z aktualnej karty
+    return acT->cardValue;
+}
