@@ -106,13 +106,13 @@ void list::setCard(int cardValue){
     acT->cardValue = Card;
 }
 
-void list::setCardColor(int cardValue){	 // ustawia kolor karty 0, 1, 2, 3
+void list::setCardColor(int cardValue){	 // set card color to 0, 1, 2, 3
     acT->cardValue = Card;
 }
-void listA::setColor(int color){	 // ustawia kolor 0, 1 [czarny, czerwony]
+void listA::setColor(int color){	 // set card color to 0, 1 [czarny, czerwony]
     acT->Color = Card;
 }
 
-int listA::getCard(){			     // pobiera jaka jest wartość z aktualnej karty
+int listA::getCard(){			     // get the value from the current card
     return acT->cardValue;
 }
