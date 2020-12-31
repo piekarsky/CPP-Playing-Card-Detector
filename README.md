@@ -12,7 +12,8 @@ An example photo showing the program operation is presented below
 
 
 The effect of the program is presented below
-<img width="550" height="350" src = img/ideal.jpg/>
+<img width="550" height="350" src = img/findsign.jpg/>
+<img width="550" height="350" src = img/console.jpg/>
 
 <hr>
 
