@@ -1,10 +1,19 @@
-# Playing-Card-Detection-without-using-OpenCV
+# CPP-Playing-Card-Detector
 
-This program finds and recognizes playing cards not using an extra image processing library such as OpenCV. The program also calculates circuit of playing cards and determine the geometric center of cards. The program finds playing cards based on the 'flood filling' algorithm, which assumes that a certain set of points is given starter (grains, seeds), from which the growth of areas begins. 
+
+
+<h2><b>1. Project description </b></p></h2>
+
+Project in C++ with only STL library. This program finds and recognizes playing cards not using an extra image processing library such as OpenCV. The program also calculates circuit of playing cards and determine the geometric center of cards. The program finds playing cards based on the 'flood filling' algorithm, which assumes that a certain set of points is given starter (grains, seeds), from which the growth of areas begins. 
 
 
 An example photo showing the program operation is presented below
 <img width="550" height="350" src = img/ideal.jpg/>
+
+
+The effect of the program is presented below
+<img width="550" height="350" src = img/ideal.jpg/>
+
 <hr>
 
 The most important functions in this program are:
