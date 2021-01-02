@@ -106,7 +106,7 @@ void getFFT_(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr
 				xt = xt1; yt = yt1;
 				go = false;
 			} else {
-				if(dst(w, h).I() == ColBor){			// je¿eli intensity bêdzie wykraczaj¹ce poza znak
+				if(dst(w, h).I() == ColBor){			// if intensity will be outside sign
 					Y = pow(pow(xt - xo, 2.0) + pow(yt - yo, 2.0), 0.5);
 					arr[i] = Y;
 					Rad = (Y > Rad)?Y:Rad;
@@ -134,19 +134,19 @@ void getFFT_(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr
 
 void getFFT(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr, unsigned int Ytr, int I, unsigned int J){
     
-	// detekcja kszta³tu - wartoœci zapisuje do macierzy z których tworzy histogram
+	// shape detection - write values ??to matrices from which it creates a histogram
 	
 	double arr[HIST_VOL], oO = 0.0;
-    unsigned int i;
-    getFFT_(dst, Xbl, Ybl, Xtr, Ytr, arr, iNkar, oO);
+	unsigned int i;
+    	getFFT_(dst, Xbl, Ybl, Xtr, Ytr, arr, iNkar, oO);
 	lista->setOo(oO);
 	for(i = 0; i < HIST_VOL; i++){
-        lista->setFFTarr(arr[i]);
-    }
-    for(i = 0; i < HIST_VOL; i++){
-        tst.DrawPoint(i + I*519, J*202 + ((int)floor(/*lista->getFFTarr[i]*/arr[i] * 200.0)));
-    }
-   //tst.ShowImage("FFT");		// wyœwietla histogram
+        		lista->setFFTarr(arr[i]);
+    	}
+    	for(i = 0; i < HIST_VOL; i++){
+        		tst.DrawPoint(i + I*519, J*202 + ((int)floor(/*lista->getFFTarr[i]*/arr[i] * 200.0)));
+    	}
+   	//tst.ShowImage("FFT");		// display the histogram
 	
 }
 
@@ -460,7 +460,7 @@ void findCard(Image1CH &dst){
 	
 	
 }
-unsigned int setKarKol_(unsigned int Id){      // identyfikuje symbole poprzez porównanie histogramów wzorca i symbolu z karty
+unsigned int setCarCol_(unsigned int Id){      // identyfikuje symbole poprzez porównanie histogramów wzorca i symbolu z karty
 	bool goL = true;
     double T[4];
 	int i0 = -1;
@@ -470,15 +470,15 @@ unsigned int setKarKol_(unsigned int Id){      // identyfikuje symbole poprzez p
 		
         k = 0;
         while(goL){
-            for (i = 0; i < 4; i++) {								   // testD2 sprawdza ró¿nice pomiêdzy danym symbolem, a wzorcem
+            for (i = 0; i < 4; i++) {				 // testD2 sprawdza ró¿nice pomiêdzy danym symbolem, a wzorcem
 				T[i] += lista->testD2(lista->acT->ffT, symHistS[i]);   // symHist[i] - histogramy wzorców
-            }														   // ffT - histogram dla ka¿dego symbolu z listy
+            }						 // ffT - histogram dla ka¿dego symbolu z listy
             goL = lista->next(Id);
             k++;
         }
 		for (i = 0; i < 4; i++) {										
 			if (T[i] < ccC) {
-				i0 = i; ccC = T[i];									   // znajduje wartoœæ najmniejsz¹
+				i0 = i; ccC = T[i];		 // znajduje wartoœæ najmniejsz¹
 			}														   // i0 - wskazany symbol
 		}
     }
@@ -567,12 +567,13 @@ void setSymArr() {
 
 			getFFT_(sym1, 2, 2, SYM_W - 2, SYM_H - 2, symH_arr, 1.0, oO);	// a function that counts the contour curve and circuit
 			oOhistS[i][0] = oO;
+			
 			// sym1.ShowImage("Original");
 			aR = findSignSym(sym1, 1, 1, SYM_W-1, SYM_H-1);
 			oOhistS[i][1] = (double)aR;
 	
 			for(j = 0; j < HIST_VOL; j++){
-           				lista->setFFTarr_(symH_arr[j], symHistS[i]);
+           				listA->setFFTarr_(symH_arr[j], symHistS[i]);
 			}
 		}
 }
@@ -652,7 +653,7 @@ int main(){
 	if (listA->findCard(9, 2)) {
 		double xC, yC;
 		listA->getC(xC, yC);
-		printf("\nCard = %1d Color = %1d\nThe circumference of the card is %5.3f\nThe coordinates of the center of the card 
+		printf("\nCard = %1d Color = %1d\nThe circumference of the card: %5.3f\nThe coordinates of the center of the card: 
 		oX = %5.1f  oY = %5.1f\n", listA->getCard(), listA->getColor(), listA->getOo(), xC, yC);
 		in.DrawPoint(xC, yC, 1, 0, 0);
 		
