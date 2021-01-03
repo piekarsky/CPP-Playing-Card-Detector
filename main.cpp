@@ -227,7 +227,7 @@ funkcja ta znajduje i oznacza symbole kart
 unsigned int findSign(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr, unsigned int Ytr, unsigned int Id, unsigned int &I, unsigned int &J){
 	unsigned int ccC = 0;
 	stack<unsigned int> stos;
-    bool go = true, goKart = true, goCol;
+  	bool go = true, goKart = true, goCol;
 	int x0 = -1, y0 = -1;
 	unsigned int x, y, x1, y1, i, j, k, xbl, ybl, xtr, ytr, iD, cnt = 0, aR;
 	
@@ -297,6 +297,7 @@ unsigned int findSignSym(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsi
 	int x0 = -1, y0 = -1;
 	unsigned int x, y, x1, y1, i, j, k, aR;
 	bool go = true;
+	
 	for (i = Xbl; i <= Xtr; i++) {
 		if (!go)break;
 		for (j = Ybl; j <= Ytr; j++) {
@@ -307,8 +308,7 @@ unsigned int findSignSym(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsi
 			}
 		}
 	}
-
-
+}
 
 
 /*
@@ -460,30 +460,42 @@ void findCard(Image1CH &dst){
 	
 	
 }
-unsigned int setCarCol_(unsigned int Id){      // identyfikuje symbole poprzez porównanie histogramów wzorca i symbolu z karty
+
+
+
+
+
+
+/*
+this function identifies symbols by comparing the pattern and symbol histograms on the card
+*/
+unsigned int setCarCol_(unsigned int Id){      
 	bool goL = true;
-    double T[4];
+ 	double T[4];
 	int i0 = -1;
 	unsigned int i, k = 0, ccC = 10000;
-    for (i = 0; i < 4; i++)T[i] = 0.0;
-    if(lista->bot(Id)){
+    	for (i = 0; i < 4; i++)T[i] = 0.0;
+    	if(listA->bot(Id)){
 		
-        k = 0;
-        while(goL){
-            for (i = 0; i < 4; i++) {				 // testD2 sprawdza ró¿nice pomiêdzy danym symbolem, a wzorcem
-				T[i] += lista->testD2(lista->acT->ffT, symHistS[i]);   // symHist[i] - histogramy wzorców
-            }						 // ffT - histogram dla ka¿dego symbolu z listy
-            goL = lista->next(Id);
-            k++;
-        }
+        		k = 0;
+        		while(goL){
+            			for (i = 0; i < 4; i++) {	// testD2 checks for differences between the given symbol and the pattern
+				T[i] += listA->testD2(listA->acT->ffT, symHistS[i]);   // symHist [i] - pattern histograms
+           		 	}		   	// ffT - histogram for each symbol in the list
+            			goL = listA->next(Id);
+            			k++;
+       		}
 		for (i = 0; i < 4; i++) {										
 			if (T[i] < ccC) {
-				i0 = i; ccC = T[i];		 // znajduje wartoœæ najmniejsz¹
-			}														   // i0 - wskazany symbol
+			i0 = i; ccC = T[i];			// finds the smallest value
+			}														   	// i0 - wskazany symbol
 		}
-    }
+   	}
 	return i0;
 }
+
+
+
 
 
 void setCarCol(){
