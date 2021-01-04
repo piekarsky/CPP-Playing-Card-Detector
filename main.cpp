@@ -328,67 +328,63 @@ void findCard(Image1CH &dst){
 	
 */
 
-
-	// algorytm wype³nienia powodziowego
+// algorytm wype³nienia powodziowego
 
 	unsigned int ccC;
 	stack<unsigned int> stos;
-    	bool go = true, goKart = true;
+ 	bool go = true, goKart = true;
 	int x0 = -1, y0 = -1;
 	double intens = 0.0;
 	unsigned int x, y, x1, y1, i, j, k, xbl, ybl, xtr, ytr, iD, I = 0, J = 0;
 	while(goKart){			 // znajduje ziarno
-        	go = true;
-        	for (i = 0; i < dst.width(); i++) {
-            		if (go) {
-                			for (j = 0; j < dst.height(); j++) {
-                    			if (dst(i, j).I() > 0.8) {
-                       			intens = 0.0;
-                       			for (int n = 0; n < 5; n++) {
-                            				for (int m = 0; m < 5; m++) {
-                                					intens += dst((i  > n-2) ? i-n + 2: i, (j > m-2) ? j - m+2 : j).I();
-                            				}
-                        			}
-                        			if(intens > 5.0){
-                            				y0 = j; x0 = i;	 	// x0, y0 - wspó³rzêdne ziarna
-                            				go = false; break;
-                        			}
-
-                    		}
-                		}
-
-            	}
-        }
+        		go = true;
+        		for (i = 0; i < dst.width(); i++) {
+           			if (go) {
+               				 for (j = 0; j < dst.height(); j++) {
+                    				if (dst(i, j).I() > 0.8) {
+                       				 	intens = 0.0;
+                        					for (int n = 0; n < 5; n++) {
+                            						for (int m = 0; m < 5; m++) {
+                              							intens += dst((i  > n-2) ? i-n + 2: i, (j > m-2) ? j - m+2 : j).I();
+                            						}
+                       					}
+                   					if(intens > 5.0){
+                           			 			y0 = j; x0 = i;	// x0, y0 - seeds coordinates
+                           						go = false; break;
+                    					}
+                   				 }
+              				  }
+           			}
+      		 }
 		
 		xbl = 10000; ybl = 10000; xtr = 0; ytr = 0; 
-        if (x0 >= 0 && y0 >= 0) {
-            stos.push(x0);		 // x0 i y0 na stos 
-            stos.push(y0);
-            bool gooo = true;
-            while (gooo) {
-                y = stos.top(); stos.pop(); x = stos.top(); stos.pop();		// pobiera ze stosu x i y
+      		if (x0 >= 0 && y0 >= 0) {
+          			stos.push(x0);		 // x0 i y0 na stos 
+           			stos.push(y0);
+          			bool gooo = true;
+           			while (gooo) {
+               				y = stos.top(); stos.pop(); x = stos.top(); stos.pop();		// pobiera ze stosu x i y
 				
-
-			   // liczy najmniejsze i najwiêksze wartoœci
-			   // najmniejsze to bottom left, a najwiêksze to top right
-                xbl = (x < xbl) ? x : xbl;	ybl = (y < ybl) ? y : ybl;
-                xtr = (x > xtr) ? x : xtr;	ytr = (y > ytr) ? y : ytr;
+			   	// liczy najmniejsze i najwiêksze wartoœci
+			 	// najmniejsze to bottom left, a najwiêksze to top right
+               				 xbl = (x < xbl) ? x : xbl;	ybl = (y < ybl) ? y : ybl;
+           				 xtr = (x > xtr) ? x : xtr;	ytr = (y > ytr) ? y : ytr;
 
 						
 				dst(x, y).I() = iNkar;
-                for (k = 0; k < 8; k++) {				    // 8 bo zgodnie z oœmiospójnoœci¹
-                    x1 = x + xofst[k]; 	y1 = y + yofst[k];
-                    if (dst(x1, y1).I() > 0.9) {			// je¿eli ten kolor ma wartoœæ intensywnoœci wieksz¹ ni¿ bia³y to idzie na stos
-                        stos.push(x1);
-                        stos.push(y1);
-                    }
-                }
-                gooo = !stos.empty();
-            }
+                				for (k = 0; k < 8; k++) {	  // 8 bo zgodnie z oœmiospójnoœci¹
+                    				x1 = x + xofst[k]; 	y1 = y + yofst[k];
+                   				if (dst(x1, y1).I() > 0.9) {	// je¿eli ten kolor ma wartoœæ intensywnoœci wieksz¹ ni¿ bia³y to idzie na stos
+                        					stos.push(x1);
+                       					stos.push(y1);
+                   				}
+                				}
+               				gooo = !stos.empty();
+            			}
 					
-            xtr += 1; ytr += 1;
-            xbl -= 2; ybl -= 2;
-            lista->push(xbl, ybl, xtr, ytr, 0);
+            			xtr += 1; ytr += 1;
+         			xbl -= 2; ybl -= 2;
+           			listA->push(xbl, ybl, xtr, ytr, 0);
             x0 = -1; y0 = -1; 
         } else {
             goKart = false;
@@ -400,68 +396,66 @@ void findCard(Image1CH &dst){
 
 	dst.ShowImage("Playing card detection");		 
 
-	   goL = true;
+	goL = true;
     while(goL){
         goL = lista->bot() && goL;
         if(goL){
             goD = true;
             while(goD){
                 goL = false;
-                if(lista->getRad() < 200){		// zak³ada, ¿e karta ma promieñ wiêkszy ni¿ 200
+                if(lista->getRad() < 200){		// assumes the card has a radius greater than 200
                     lista->del();
                     goD = false;
                     goL = true;
                     break;
 					
                 } else {
-                    goD = lista->next(); 
+                    goD = listA->next(); 
                 }
             }
         }
     }
 	
     goL = true;
-    if(lista->bot(0)){
-        while(goL){				// idzie na bottom(0) - idzie na pocz¹tek, pobiera z listy xbl, ybl, xtr, ytr i id i zwiêksza prostok¹t
-            lista->get(xbl, ybl, xtr, ytr, iD);
+    if(listA->bot(0)){
+        while(goL){				// goes to bottom (0) - goes to the beginning, gets xbl, ybl, xtr, ytr and id from the list and increments rectangle
+            listA->get(xbl, ybl, xtr, ytr, iD);
             xtr += 2; ytr += 2;
 			xbl -= 2; ybl -= 2;
 			
 			
 			
-			colorBorder(dst, xbl, ybl, xtr, ytr);   	 // wype³nia obszary pomiêdzy krawêdziami prostokata, a konturem karty
+	colorBorder(dst, xbl, ybl, xtr, ytr);   	 // fill the areas between the edges of the rectangle and the outline of the card
             dst.DrawLine(xbl, ybl, xtr, ybl, iNkli);
             dst.DrawLine(xbl, ybl, xbl, ytr, iNkli);
             dst.DrawLine(xtr, ybl, xtr, ytr, iNkli);
             dst.DrawLine(xtr, ytr, xbl, ytr, iNkli);
-            lista->goId(iD);
-            goL = lista->next(0);
+            listA->goId(iD);
+            goL = listA->next(0);
         }
     }
 	
     dst.ShowImage("Playing card detection");
 
 	goL = true;
-    if(lista->bot(0)){
+    if(listA->bot(0)){
 		unsigned int aR = 0;
 		double oO, X, Y;
         while(goL){
-            lista->get(xbl, ybl, xtr, ytr, iD);
+            listA->get(xbl, ybl, xtr, ytr, iD);
             ccC = findSign(dst, xbl, ybl, xtr, ytr, iD, I, J);
 			findCont(dst, xbl, ybl, xtr, ytr, oO, X, Y);
-            lista->goId(iD);
-			lista->setKarta(ccC);
-			lista->setOo(oO);
-			lista->setC(X, Y);
-            goL = lista->next(0);
+            listA->goId(iD);
+			listA->setCard(ccC);
+			listA->setOo(oO);
+			listA->setC(X, Y);
+            goL = listA->next(0);
         }
     }
     dst.ShowImage("Symbol detection");
 	
 	
 }
-
-
 
 
 
@@ -504,11 +498,11 @@ void setCarCol(){
     	unsigned int xbl, ybl, xtr, ytr, iD;
    	 if(listA->bot(0)){
         		while(goL){
-            		listA->get(xbl, ybl, xtr, ytr, iD);
-           		i0 = setCarCol_(iD);
-            		listA->goId(iD);
-		listA->setColor(i0);
-            		goL = listA->next(0);
+            			listA->get(xbl, ybl, xtr, ytr, iD);
+           			i0 = setCarCol_(iD);
+            			listA->goId(iD);
+			listA->setColor(i0);
+            			goL = listA->next(0);
         		}
     	}
 }
@@ -529,14 +523,13 @@ unsigned int setCarCol_(unsigned int Id){
         	while(goL){
             		for (i = 0; i < 4; i++) {			                    //testD2 checks for differences between the given symbol and the pattern
 			T[i] += listA->testD2(listA->acT->ffT, symHistS[i]);     // symHist [i] - pattern histograms
-           		}														      		goL = lista->next(Id);
+           		}														      		goL = listA->next(Id);
             		k++;
       	}
 	for (i = 0; i < 4; i++) {										
 		if (T[i] < ccC) {
 			i0 = i; ccC = T[i];				       // finds the smallest value
-			}														   
-		}
+			}														   	}
     	}
 	return i0;
 }
