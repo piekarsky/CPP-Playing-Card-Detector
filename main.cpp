@@ -221,74 +221,117 @@ void colorBorder(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int
 	}
 }
 
-/*
-funkcja ta znajduje i oznacza symbole kart
-*/
+
+/ *
+this function finds and marks the colors of the cards
+* /
 unsigned int findSign(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr, unsigned int Ytr, unsigned int Id, unsigned int &I, unsigned int &J){
 	unsigned int ccC = 0;
 	stack<unsigned int> stos;
-  	bool go = true, goKart = true, goCol;
+  	bool go = true, goCard = true, goCol;
 	int x0 = -1, y0 = -1;
 	unsigned int x, y, x1, y1, i, j, k, xbl, ybl, xtr, ytr, iD, cnt = 0, aR;
 	
-	while(goKart){			// znajduje ziarna
+	while(goCard){			// znajduje ziarna
 		
 		// algorytm wyszukuje czarne elementy i wype³nia je bia³ym kolorem
 		go = true; goCol = false;
-        for (i = Xbl; i <= Xtr; i++) {
-            if (go) {
-                for (j = Ybl; j <= Ytr; j++) {
-                    goCol = (dst(i, j).I() > 0.35 && dst(i, j).I() < 0.45) || goCol;
-                    if(goCol){
-                        if (dst(i, j).I() < 0.3) {
-                            y0 = j; x0 = i;
-                            go = false;
-                            break;
-                        }
-                    }
-                }
-            }
-						
-        }
-        if (x0 >= 0 && y0 >= 0) {
-            stos.push(x0);
-            stos.push(y0);
-			bool gooo = true;
-			xbl = 10000; ybl = 10000; xtr = 0; ytr = 0; aR = 0;
-            while (gooo) {
-                y = stos.top(); stos.pop(); x = stos.top(); stos.pop();
-				xbl = (x < xbl) ? x : xbl;	ybl = (y < ybl) ? y : ybl;
-                xtr = (x > xtr) ? x : xtr;	ytr = (y > ytr) ? y : ytr;
-				if (dst(x, y).I() < 0.2) { dst(x, y).I() = iNksy; aR++; }
-                for (k = 0; k < 8; k++) {
-                    x1 = x + xofst[k]; 	y1 = y + yofst[k];
-                    if(x1 > Xbl && x1 < Xtr && y1 > Ybl && y1 < Ytr){
-                        if (dst(x1, y1).I() < 0.2){
-                            stos.push(x1);
-                            stos.push(y1);
-                        }
-                    }
-                }
-				gooo = !stos.empty();
-            }
-			lista->push(xbl-2, ybl-2, xtr+2, ytr+2, Id);		
-			lista->setAr((double)aR);
-            x0 = -1; y0 = -1;
-        } else {
-            goKart = false;
-        }
+        		for (i = Xbl; i <= Xtr; i++) {
+            			if (go) {
+               			 	for (j = Ybl; j <= Ytr; j++) {
+                    				goCol = (dst(i, j).I() > 0.35 && dst(i, j).I() < 0.45) || goCol;
+                   				if(goCol){
+                        					if (dst(i, j).I() < 0.3) {
+                            					y0 = j; x0 = i;
+                            					go = false;
+                            					break;
+                       				 }
+                  			  }
+              			  }
+           		}
+								
+       	}
+        	if (x0 >= 0 && y0 >= 0) {
+            		stos.push(x0);
+            		stos.push(y0);
+		bool gooo = true;
+		xbl = 10000; ybl = 10000; xtr = 0; ytr = 0; aR = 0;
+            		while (gooo) {
+                			y = stos.top(); stos.pop(); x = stos.top(); stos.pop();
+			xbl = (x < xbl) ? x : xbl;	ybl = (y < ybl) ? y : ybl;
+            			xtr = (x > xtr) ? x : xtr;	ytr = (y > ytr) ? y : ytr;
+			if (dst(x, y).I() < 0.2) { dst(x, y).I() = iNksy; aR++; }
+               				for (k = 0; k < 8; k++) {
+                   				x1 = x + xofst[k]; 	y1 = y + yofst[k];
+                    				if(x1 > Xbl && x1 < Xtr && y1 > Ybl && y1 < Ytr){
+                    					if (dst(x1, y1).I() < 0.2){
+                            					stos.push(x1);
+                           					stos.push(y1);
+                       					}
+                   				 }
+               				 }
+			gooo = !stos.empty();
+          		 }
+		listA->push(xbl-2, ybl-2, xtr+2, ytr+2, Id);		
+		listA->setAr((double)aR);
+           		x0 = -1; y0 = -1;
+    		} else {
+            		  goCard = false;
+       		 }
 	}
 
 	
 	// del is a method that removes redundant card symbols (those that are too small)
-	bool goL = true; unsigned int ccc = lista->cntInKart(Id), mxx = lista->getMax(Id);
+	bool goL = true; unsigned int ccc = listA->cntInCard(Id), mxx = listA->getMax(Id);
 	if(ccc > 0){
-        double SD = lista->getSD(Id);
-        lista->bot(Id);
+      		double SD = listA->getSD(Id);
+      		listA->bot(Id);
 
 		
-	// if the difference between the maximum symbol (the symbol with the largest diameter),
-	// and the tested symbol is greater than the standard deviation, it removes the symbol
+		// if the difference between the maximum symbol (the symbol with the largest diameter),
+		// and the tested symbol is greater than the standard deviation, it removes the symbol
+
+		while(goL){
+           		 	// cout << " SD = " << SD << " mxx = " << mxx << " Rad = " << listA->getRad() << endl;
+            			if((double)(mxx - listA->getRad()) > SD){
+                			listA->del();
+               				if(!listA->bot(Id)){
+                    			break;
+               				}
+            			} else {
+                				goL = listA->next(Id);
+           	  		  }
+     		 }
+		
+     		if(listA->bot(Id)){
+            			goL = true;
+            			while(goL){
+				ccC++;
+                				listA->get(xbl, ybl, xtr, ytr,iD);
+                				xtr += 2; ytr += 2;
+                				xbl -= 2; ybl -= 2;
+               				getFFT(dst, xbl, ybl, xtr, ytr, I, J);
+
+			
+				// mark symbols on individual cards
+               				dst.DrawLine(xbl, ybl, xtr, ybl, iNkli);
+               				dst.DrawLine(xbl, ybl, xbl, ytr, iNkli);
+              				dst.DrawLine(xtr, ybl, xtr, ytr, iNkli);
+               				dst.DrawLine(xtr, ytr, xbl, ytr, iNkli);
+
+
+              				if(++I == 5){
+                   				I = 0;
+              					if(++J == 12){
+                        				J = 0;
+               					}
+            				}
+                			goL = lista->next(Id);
+              			}
+     		}
+    	}
+	return ccC;
+}
 
 
 
@@ -328,7 +371,7 @@ void findCard(Image1CH &dst){
 	
 */
 
-// algorytm wype³nienia powodziowego
+	// flood fill algorithm
 
 	unsigned int ccC;
 	stack<unsigned int> stos;
