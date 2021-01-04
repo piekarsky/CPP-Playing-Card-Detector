@@ -332,11 +332,11 @@ void findCard(Image1CH &dst){
 
 	unsigned int ccC;
 	stack<unsigned int> stos;
- 	bool go = true, goKart = true;
+ 	bool go = true, goCard = true;
 	int x0 = -1, y0 = -1;
 	double intens = 0.0;
 	unsigned int x, y, x1, y1, i, j, k, xbl, ybl, xtr, ytr, iD, I = 0, J = 0;
-	while(goKart){			 // znajduje ziarno
+	while(goCard){			 // finds a seed
         		go = true;
         		for (i = 0; i < dst.width(); i++) {
            			if (go) {
@@ -359,22 +359,22 @@ void findCard(Image1CH &dst){
 		
 		xbl = 10000; ybl = 10000; xtr = 0; ytr = 0; 
       		if (x0 >= 0 && y0 >= 0) {
-          			stos.push(x0);		 // x0 i y0 na stos 
+          			stos.push(x0);		 // x0 and y0 to the stack
            			stos.push(y0);
           			bool gooo = true;
            			while (gooo) {
-               				y = stos.top(); stos.pop(); x = stos.top(); stos.pop();		// pobiera ze stosu x i y
+               				y = stos.top(); stos.pop(); x = stos.top(); stos.pop();		// get x and y from the stack
 				
-			   	// liczy najmniejsze i najwiêksze wartoœci
-			 	// najmniejsze to bottom left, a najwiêksze to top right
+			   	// counts the smallest and greatest values
+			 	// the smallest is bottom left and the biggest is top right
                				 xbl = (x < xbl) ? x : xbl;	ybl = (y < ybl) ? y : ybl;
            				 xtr = (x > xtr) ? x : xtr;	ytr = (y > ytr) ? y : ytr;
 
 						
 				dst(x, y).I() = iNkar;
-                				for (k = 0; k < 8; k++) {	  // 8 bo zgodnie z oœmiospójnoœci¹
+                				for (k = 0; k < 8; k++) {	 // eight according to eight coherence
                     				x1 = x + xofst[k]; 	y1 = y + yofst[k];
-                   				if (dst(x1, y1).I() > 0.9) {	// je¿eli ten kolor ma wartoœæ intensywnoœci wieksz¹ ni¿ bia³y to idzie na stos
+                   				if (dst(x1, y1).I() > 0.9) {          // if this color has an intensity value greater than white it goes on the stack
                         					stos.push(x1);
                        					stos.push(y1);
                    				}
@@ -385,75 +385,73 @@ void findCard(Image1CH &dst){
             			xtr += 1; ytr += 1;
          			xbl -= 2; ybl -= 2;
            			listA->push(xbl, ybl, xtr, ytr, 0);
-            x0 = -1; y0 = -1; 
-        } else {
-            goKart = false;
-        }
+            			x0 = -1; y0 = -1; 
+        		} else {
+           			goCard = false;
+        		  }
 	}
-
 
 	bool goL = true, goD = true;
 
 	dst.ShowImage("Playing card detection");		 
 
 	goL = true;
-    while(goL){
-        goL = lista->bot() && goL;
-        if(goL){
-            goD = true;
-            while(goD){
-                goL = false;
-                if(lista->getRad() < 200){		// assumes the card has a radius greater than 200
-                    lista->del();
-                    goD = false;
-                    goL = true;
-                    break;
+    	while(goL){
+        		goL = lista->bot() && goL;
+        		if(goL){
+           			goD = true;
+            			while(goD){
+                				goL = false;
+                				if(listA->getRad() < 200){	// assumes the card has a radius greater than 200
+                  				listA->del();
+                   				goD = false;
+                   				goL = true;
+                    				break;
 					
-                } else {
-                    goD = listA->next(); 
-                }
-            }
-        }
-    }
+                				} else {
+                    				goD = listA->next(); 
+                				  }
+            			}
+        		}
+    	}
 	
-    goL = true;
-    if(listA->bot(0)){
-        while(goL){				// goes to bottom (0) - goes to the beginning, gets xbl, ybl, xtr, ytr and id from the list and increments rectangle
-            listA->get(xbl, ybl, xtr, ytr, iD);
-            xtr += 2; ytr += 2;
+    	goL = true;
+    	if(listA->bot(0)){
+        		while(goL){	// goes to bottom (0) - goes to the beginning, gets xbl, ybl, xtr, ytr and id from the list and increments rectangle
+            			listA->get(xbl, ybl, xtr, ytr, iD);
+            			xtr += 2; ytr += 2;
 			xbl -= 2; ybl -= 2;
 			
 			
 			
-	colorBorder(dst, xbl, ybl, xtr, ytr);   	 // fill the areas between the edges of the rectangle and the outline of the card
-            dst.DrawLine(xbl, ybl, xtr, ybl, iNkli);
-            dst.DrawLine(xbl, ybl, xbl, ytr, iNkli);
-            dst.DrawLine(xtr, ybl, xtr, ytr, iNkli);
-            dst.DrawLine(xtr, ytr, xbl, ytr, iNkli);
-            listA->goId(iD);
-            goL = listA->next(0);
-        }
-    }
+			colorBorder(dst, xbl, ybl, xtr, ytr);   	 // fill the areas between the edges of the rectangle and the outline of the card
+            			dst.DrawLine(xbl, ybl, xtr, ybl, iNkli);
+           			dst.DrawLine(xbl, ybl, xbl, ytr, iNkli);
+            			dst.DrawLine(xtr, ybl, xtr, ytr, iNkli);
+           			dst.DrawLine(xtr, ytr, xbl, ytr, iNkli);
+            			listA->goId(iD);
+           			goL = listA->next(0);
+       		 }
+  	}
 	
-    dst.ShowImage("Playing card detection");
+	dst.ShowImage("Playing card detection");
 
 	goL = true;
-    if(listA->bot(0)){
+  	if(listA->bot(0)){
 		unsigned int aR = 0;
 		double oO, X, Y;
-        while(goL){
-            listA->get(xbl, ybl, xtr, ytr, iD);
-            ccC = findSign(dst, xbl, ybl, xtr, ytr, iD, I, J);
+      		while(goL){
+            			istA->get(xbl, ybl, xtr, ytr, iD);
+           			ccC = findSign(dst, xbl, ybl, xtr, ytr, iD, I, J);
 			findCont(dst, xbl, ybl, xtr, ytr, oO, X, Y);
-            listA->goId(iD);
+          			listA->goId(iD);
 			listA->setCard(ccC);
 			listA->setOo(oO);
 			listA->setC(X, Y);
-            goL = listA->next(0);
-        }
-    }
+           			goL = listA->next(0);
+       		 }
+    	}
     dst.ShowImage("Symbol detection");
-	
 	
 }
 
