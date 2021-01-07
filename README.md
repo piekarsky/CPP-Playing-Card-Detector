@@ -4,7 +4,7 @@
 
 <h2><b>1. Project description </b></p></h2>
 
-Project in C++ with only STL library. This program finds and recognizes playing cards not using an extra image processing library such as OpenCV. The program also calculates circuit of playing cards and determine the geometric center of cards. The program finds playing cards based on the 'flood filling' algorithm, which assumes that a certain set of points is given starter (grains, seeds), from which the growth of areas begins. 
+Project in C++ with only STL library. This program finds, marks and recognizes playing cards not using an extra image processing library such as OpenCV. This program calculates the perimeter and area of playing cards, determines their center and marks suits inside them.  The program finds playing cards based on the 'flood filling' algorithm, which assumes that a certain set of points is given starter (grains, seeds), from which the growth of areas begins. 
 
 
 An example photo showing the operation of the program is presented below
@@ -77,7 +77,7 @@ which has the largest diameter and the diameter of the test piece is greater tha
 standard, such an element is removed. The picture below is presented after applying the algorithm to search for black elements and fill them with white on the 7 of hearts card
 <img width="550" height="350" src = img/findsign.jpg/>
 
-The picture belos shows the image of selecting symbols and removing unnecessary elements on the 7 of hearts card
+The picture below shows the image of selecting symbols and removing unnecessary elements on the 7 of hearts card
 <img width="550" height="350" src = img/findsign2.jpg/>
 
 <hr>
