@@ -14,7 +14,7 @@ An example photo showing the operation of the program is presented below.
 
 Pictures showing the operation of the program are presented below
 <img width="550" height="350" src = img/findcont.jpg/>
-<img width="550" height="750" src = img/console.jpg/>
+<img width="520" height="750" src = img/console.jpg/>
 
 <hr>
 
@@ -107,4 +107,13 @@ a histogram of the distance between the point being the geometric center of the 
 encompassing the symbol (suits), and the subsequent points on the edges of the symbol pattern. For building
 function getFFT_ is responsible for such a histogram. Four symbol patterns needed
 for card identification are presented in the picture below.
-<img width="550" height="350" src = img/suits_patterns.jpg/>
+<img width="450" height="350" src = img/suits_patterns.jpg/>
+
+
+- getFFT_ function<br/>
+Its task is to create a distance function (along the radius) of the symbol shape from the center
+the rectangle that includes the symbol. The idea behind this function is that for a specific symbol
+in the rectangle, the pointer is set to the center resulting from the diagonal
+and searches for points on the radius until white is encountered. If white is encountered then
+this radius (distance from center to edges) is recorded. It creates this distance function
+for symbol patterns and for all symbols on the card.
