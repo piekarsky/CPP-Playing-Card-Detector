@@ -54,7 +54,7 @@ class list {
 		void getC(double &xC, double &yC);
 		double getAr();
 		double getOo();
-      		bool findCard(int card, int color);	
+      		bool findCard(int Card, int Color);	
     protected:
     private:
 };
