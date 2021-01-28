@@ -116,3 +116,40 @@ void listA::setColor(int color){	 // set card color to 0, 1 [czarny, czerwony]
 int listA::getCard(){			     // get the value from the current card
     return acT->cardValue;
 }
+
+int listA::getColor(){				 // pobiera jaki jest kolor z aktualnej karty
+    return acT->kolor;
+}
+int listA::getColor(){ 
+    return acT->color;
+}
+
+
+bool listA::next(unsigned int inCard){
+    bool re = false;
+    if(acT != 0){ 
+        while(acT->next != 0){
+            acT = acT->next;
+            if(acT->inKarta == inKart){
+                re = true;
+                break;
+            }
+        }
+    }
+    return re;
+}
+
+bool listA::bot(unsigned int inCard){
+    bool re = false;
+    if(boT != 0){
+        acT = boT;
+        if(acT->inKarta == inKart){
+            re = true;
+        } else {
+            re = next(inKart); 
+        }
+    } else {
+        re = false;			 // lista jest pusta
+    }
+    return re;
+}
