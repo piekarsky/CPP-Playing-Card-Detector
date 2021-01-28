@@ -167,7 +167,7 @@ void getFFT_(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr
 void getFFT(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr, unsigned int Ytr, int I, unsigned int J)
 {
 
-    // shape detection - write values ??to matrices from which it creates a histogram
+    // shape detection - write values to matrices from which it creates a histogram
 
     double arr[HIST_VOL], oO = 0.0;
     unsigned int i;
@@ -186,8 +186,8 @@ void getFFT(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr,
 }
 
 /*
-funkcja liczaca odchylenie standardowe odleg³oœci p-któw brzegowych figury(arr) do punktu wnêtrza figury (p(x, y))
-= minimum dla œrodka figury
+function calculating the standard deviation of the distance from the boundary points of the figure (arr) to the point inside the figure (p (x, y))
+= minimum for the center of the figure
 */
 double getD2(double arr[HIST_VOL][2], double x, double y)
 {
@@ -197,7 +197,7 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
     {
         t = dist(x, y, arr[i][0], arr[i][1]);
         sM += t;
-        ar[i] = t;							// sumuje punkty bêd¹ce na obrze¿u karty
+        ar[i] = t;							// add up the points at the edge of the card
     }
     sM /= (double)HIST_VOL;
     for(i = 0; i < HIST_VOL; i++)
@@ -205,7 +205,7 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
         t = sM - ar[i];
         s += t*t;
     }
-    return pow(s, 0.5);		// zwraca odchylenie standardowe
+    return pow(s, 0.5);		// returns the standard deviation
 }
 
 
@@ -295,7 +295,7 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
         while(goCard) 			// znajduje ziarna
         {
 
-            // algorytm wyszukuje czarne elementy i wype³nia je bia³ym kolorem
+            // the algorithm searches for black elements and fills them with white
             go = true;
             goCol = false;
             for (i = Xbl; i <= Xtr; i++)
