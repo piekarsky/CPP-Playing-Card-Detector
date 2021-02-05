@@ -292,7 +292,7 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
         int x0 = -1, y0 = -1;
         unsigned int x, y, x1, y1, i, j, k, xbl, ybl, xtr, ytr, iD, cnt = 0, aR;
 
-        while(goCard) 			// znajduje ziarna
+        while(goCard) 			// finds grains
         {
 
             // the algorithm searches for black elements and fills them with white
@@ -414,7 +414,7 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
                     getFFT(dst, xbl, ybl, xtr, ytr, I, J);
 
 
-                    // mark symbols on individual cards
+                    // mark symbols on individual playing cards
                     dst.DrawLine(xbl, ybl, xtr, ybl, iNkli);
                     dst.DrawLine(xbl, ybl, xbl, ytr, iNkli);
                     dst.DrawLine(xtr, ybl, xtr, ytr, iNkli);
@@ -463,9 +463,10 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
     }
 
 
-    /*
-    funkcja znajduje karty i zakreœla je prostok¹tami
-    */
+   
+    / *
+    the function finds the cards and circles them with rectangles
+    * /
     void findCard(Image1CH &dst)
     {
         /*
@@ -775,7 +776,7 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
         double symH_arr[HIST_VOL], oO = 0.0;
         unsigned int i, j, aR=0;
 
-        for (i = 0; i < 4; i++)  			//color number [0, 1, 2, 3]
+        for (i = 0; i < 4; i++)  			//suit number [0, 1, 2, 3]
         {
             for(j = 0; j < HIST_VO_; j++)
             {
@@ -818,22 +819,14 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
     					*/
     void setArOfs()
     {
-        xofst[0] =  1;
-        yofst[0] = -1;
-        xofst[1] =  1;
-        yofst[1] =  0;
-        xofst[2] =  1;
-        yofst[2] =  1;
-        xofst[3] =  0;
-        yofst[3] =  1;
-        xofst[4] = -1;
-        yofst[4] =  1;
-        xofst[5] = -1;
-        yofst[5] =  0;
-        xofst[6] = -1;
-        yofst[6] = -1;
-        xofst[7] =  0;
-        yofst[7] = -1;
+        xofst[0] =  1;         yofst[0] = -1;
+        xofst[1] =  1;         yofst[1] =  0;
+        xofst[2] =  1;         yofst[2] =  1;
+        xofst[3] =  0;         yofst[3] =  1;
+        xofst[4] = -1;         yofst[4] =  1;
+        xofst[5] = -1;         yofst[5] =  0;
+        xofst[6] = -1;         yofst[6] = -1;
+        xofst[7] =  0;         yofst[7] = -1;
     }
 
 
