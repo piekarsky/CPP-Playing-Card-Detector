@@ -103,14 +103,14 @@ void list::get(unsigned int &blX, unsigned int &blY, unsigned int &trX, unsigned
 this function set the value to 2, 7, 8, 9
 */
 void list::setCard(int cardValue){	
-    acT->cardValue = Card;
+    acT->cardValue = card;
 }
 
 void list::setCardColor(int cardValue){	 // set card color to 0, 1, 2, 3
-    acT->cardValue = Card;
+    acT->cardValue = card;
 }
 void listA::setColor(int color){	 // set card color to 0, 1 [czarny, czerwony]
-    acT->Color = Card;
+    acT->Color = card;
 }
 
 int list::getCard(){			     // get the value from the current card
@@ -160,7 +160,7 @@ unsigned int list::getId(){		// get the id from the current element
     return acT->Id;  
 }
 
-bool listA::goId(unsigned int Id){			// go to the specified id
+bool list::goId(unsigned int Id){			// go to the specified id
 	bool re = false;
 	if(boT != 0){
         acT = boT;
@@ -179,4 +179,22 @@ bool listA::goId(unsigned int Id){			// go to the specified id
         re = false;
     }
     return re;
+}
+
+void list::getC(double &xC, double &yC) {
+	xC = acT->xC;
+	yC = acT->yC;
+}
+bool list::findCard(int card, int color) {
+	bool re = false, go = true;
+	if (bot(0)) {
+		while (go) {
+			if (acT->card == card && acT->color == color) {
+				re = true;
+				break;
+			}
+			go = next(0);
+		}
+	}
+	return re;
 }
