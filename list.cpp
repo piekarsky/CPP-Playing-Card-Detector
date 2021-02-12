@@ -109,7 +109,7 @@ void list::setCard(int cardValue){
 void list::setCardColor(int cardValue){	 // set card color to 0, 1, 2, 3
     acT->cardValue = card;
 }
-void listA::setColor(int color){	 // set card color to 0, 1 [czarny, czerwony]
+void listA::setColor(int color){	 // set card color to 0, 1 [black, red]
     acT->Color = card;
 }
 
@@ -197,4 +197,15 @@ bool list::findCard(int card, int color) {
 		}
 	}
 	return re;
+}
+
+
+bool list::top(){ 
+    bool re = true;;
+    if(boT != 0){
+        acT = toP;
+    } else {
+        re = false;			
+    }
+    return re;
 }
