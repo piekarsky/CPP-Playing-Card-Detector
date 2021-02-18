@@ -181,6 +181,9 @@ bool list::goId(unsigned int Id){			// go to the specified id
     return re;
 }
 
+
+
+
 void list::getC(double &xC, double &yC) {
 	xC = acT->xC;
 	yC = acT->yC;
