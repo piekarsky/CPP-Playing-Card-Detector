@@ -25,25 +25,6 @@ unsigned int xofst[8], yofst[8];
 double symHistS[4][HIST_VO_];
 double oOhistS[4][2];
 
-void setKarKol(){
-	int i0;
-	bool goL = true;
-    unsigned int xbl, ybl, xtr, ytr, iD;
-    if(lista->bot(0)){
-        while(goL){
-            lista->get(xbl, ybl, xtr, ytr, iD);
-            i0 = setKarKol_(iD);
-            lista->goId(iD);
-			lista->setKolor(i0);
-            goL = lista->next(0);
-        }
-    }
-}
-
-
-
-
-
 /*
 this function converts an image to grayscale
 */
