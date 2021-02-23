@@ -6,9 +6,9 @@ class list {
   	public:
 		list();
         		virtual ~list();
-        		card* toP;				// pointer to the first element
+        		card* toP;			// pointer to the first element
         		card* boT;			// pointer to the last element
-        		card* acT;			// acts on shift sets to the current element that resulted from 'next' or 'previous'
+        		card* acT;			// act on shift sets to the current element that resulted from 'next' or 'previous'
 
         		unsigned int Id;
         		double stepHST;
@@ -32,9 +32,9 @@ class list {
         		bool next(unsigned int inCard); 
     		bool bot(unsigned int inCard);
 
-        		unsigned int getId();			// downloads the card id
-        		bool goId(unsigned int Id);		// jumps to the specified id
-       		bool del(unsigned int Id);		// removes an item from the list with a specific id
+        		unsigned int getId();			// download the card id
+        		bool goId(unsigned int Id);		// jump to the specified id
+       		bool del(unsigned int Id);		// remove an item from the list with a specific id
      		bool del();				
 		
         		unsigned int getRad();
