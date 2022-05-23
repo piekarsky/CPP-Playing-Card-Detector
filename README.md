@@ -2,7 +2,7 @@
 
 
 
-<h2><b>1. Synopsis </b></p></h2>
+<h2><b>1. Overview </b></p></h2>
 
 Project in C++ with only STL. This program finds, marks and recognizes playing cards not using an extra image processing library such as OpenCV. This program calculates the perimeter and area of playing cards, determines their center and marks suits inside them.  The program finds playing cards based on the 'flood filling' algorithm, which assumes that a certain set of points is given starter (grains, seeds), from which the growth of areas begins. 
 
