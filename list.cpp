@@ -23,14 +23,14 @@ void list::push(unsigned int blX, unsigned int blY, unsigned int trX, unsigned i
 	
 	// push - inserts a new element (bottomleft, topright and inCard)
 	
-	card* Card = new card();		 	 // initialize a new 'card' object
+	card* Card = new card();		 	 
    	if(toP == 0)toP = karta;
- 	Id++;					                   // increment the id
+ 	Id++;					                   
   	Card->blX = blX;
    	Card->blY = blY;
    	Card->trX = trX;
  	Card->trY = trY;
-  	Card->next = boT;				  // card next = bot because it sets the pointer to the beginning
+  	Card->next = boT;				  
  	Card->Id   = Id;
     	Card->inCard  = inCard;
    	
@@ -38,7 +38,7 @@ void list::push(unsigned int blX, unsigned int blY, unsigned int trX, unsigned i
     	Card->prev  = 0;
     	Card->Card = 0;
    	boT = Card; 
-  	acT = Card;					  // index to the created object tab
+  	acT = Card;					 
     	for(unsigned int i = 0; i < HIST_VO_; i++){
         		Card->ffT[i] = 0.0;				  // reset this matrix to add items to the histogram
   	}
@@ -49,7 +49,7 @@ bool list::top(){
     	if(boT != 0){
        	 	acT = toP;
     	} else {
-        		re = false;			// the list is empty
+        		re = false;			
   	 }
     	return re;
 }
