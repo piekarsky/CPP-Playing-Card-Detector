@@ -1,42 +1,36 @@
 # CPP-Playing-Card-Detector
 
 
-
-<h2><b>1. Overview </b></p></h2>
-
-Project in C++ with only STL. This program finds, marks and recognizes playing cards not using an extra image processing library such as OpenCV. This program calculates the perimeter and area of playing cards, determines their center and marks suits inside them.  The program finds playing cards based on the 'flood filling' algorithm, which assumes that a certain set of points is given starter (grains, seeds), from which the growth of areas begins. 
+### 1. Overview
+Project in C++ with only STL. This program finds, marks and recognizes playing cards not using an extra image processing library such as OpenCV. This program calculates the perimeter and area of playing cards, determines their center and marks suits inside them.  The program finds playing cards based on the 'flood filling' algorithm, which assumes that a certain set of points is given starter (grains, seeds), from which the expansion of areas begins. 
 
 
-An example photo showing the operation of the program is presented below.
+The example photo showing the operation of this program is presented below.
 <img width="550" height="350" src = img/ideal.jpg/>
 
 
-
-Pictures showing the operation of the program are presented below
+The images below show how this program works.
 <img width="550" height="350" src = img/findcont.jpg/>
 <img width="520" height="750" src = img/console.jpg/>
 
-<hr>
 
-<h2><b>2. Working principle </b></p></h2>
-
-
+### 2. Working principle 
 The most important functions in this program are:
-- grayscale function <br/>
-The purpose of this function is to convert an original image to grayscale. Making an image in shades of gray is such a transformation image to get for each image pixel according to the brightness of a pixel such a share of each of these components alone. For this purpose, an image pixel is first read of a specific color with an appropriate share of each of the basic components and extracts the R, G, B components. Then the brightness of each color is summed basic and divides this sum completely by 3. After this operation, a synthesis should be made
-color from these three components. The operations are performed in a loop for each image pixel.
-The photo below shows the original image after conversion.
+- <b>grayscale function </b> <br/> </b>
+The purpose of this function is to convert an original photo to grayscale. A grayscale image is an image in which the proportion of each R, G, B component is the same. Making an image in grayscale comes down to such transformation of the image to obtain for each pixel of the image, according to the degree of brightness of the pixel, the same share of each of these components. For this purpose, first, a pixel of the image with a specific color is read with the appropriate share of each of the basic components and the R, G, B components are extracted. Then, the brightness of each color is summed up and divides this sum without remainder by 3. After this operation, it performs synthesis color from these three components. The operations are performed in a loop for each image pixel.
+The image below shows the original photo after conversion.
 <img width="550" height="350" src = img/gray.jpg/>
 <br><br>
 
 
-- binarization function <br/>
-The purpose of this function is to separate the foreground objects from the background. It designates for the image brightness threshold, and then pixels brighter than the threshold set are given one value, and the darker ones another. In this program, this function assigns an intensity value 1 pixels whose intensity is greater than 0.45 and assigns a value of 0 to others.
-The photo below shows the original image after applying the thresholding
+- <b>binarization function </b> <br/>
+The purpose of this function is to separate the foreground objects from the background. 
+It designates for brightness threshold, and then pixels brighter than the threshold are given one value and the darker one the other. In this program, this function assigns an intensity value 1 to pixels whose intensity is greater than 0.45, and assigns a value of 0 to others.
+The image below shows the grayscale image after applying the thresholding.
 <img width="550" height="350" src = img/bin.jpg/>
 
 
-- findCard function <br/>
+- <b> findCard function </b> <br/>
 The purpose of this function is to find,fill and circle playing cards. The feature of finding cards is based on the 'flood filling' algorithm, which assumes that a certain set of points is given starter (seeds), from which the growth of areas begins. Given attachment point
 it is up to grain if it meets the uniformity test, so all pixels are consistent in eight directions to the start pixel and having the same color as it will be colored in
 new fill color. It follows that the area must be filled before the operation
@@ -54,19 +48,18 @@ The image after the application of the flood algorithm is presented below.
 
 The picture below shows  the original image with the playing cards circled in rectangles.
 <img width="550" height="350" src = img/floodfill_rec.jpg/>
-<hr>
 
 
-- colorBorder function <br/>
+
+- <b> colorBorder function </b> <br/>
 This function fills the area between the rectangle's edges and the outline playing
 cards in order to search each symbol in a specific area. After this function is used in the analyzed rectangle, only the card suits are black.
 The picture below shows the original image after applying this function
 <img width="550" height="350" src = img/colorborder.jpg/>
-<hr>
 
 
 
-- findSign function <br/>
+- <b>findSign function </b> <br/>
 The purpose of this function is to find and mark suits on each card. Finding suits do the same as finding cards, only an algorithm
 works inside each rectangle. As in these rectangles only the suits are black
 the algorithm searches for black elements and fills them with white. This feature uses
@@ -80,9 +73,8 @@ standard, such an element is removed. The picture below is presented after apply
 The picture below shows the image of suits and removing unnecessary elements on the 7 of hearts card
 <img width="550" height="350" src = img/findsign2.jpg/>
 
-<hr>
 
-- findCont function <br/>
+- <b> findCont function </b> <br/>
 This function finds and marks the outlines of playing cards, determines the coordinates of the center and counts the perimeter of the playing cards. To find the outline of a card, the color of the card and the color of the suits on it must be
 different from the fill color of the analyzed rectangle. The algorithm works like this that
 starting from the coordinates being the geometrical center of the rectangle it moves
@@ -101,7 +93,7 @@ The action ends when there is no better point in the eight coherent environment.
 <hr>
 
 
-- setSymArr function<br/>
+- <b> setSymArr function </b> <br/>
 The effect of this function are 4 matrices storing histograms for patterns -
 a histogram of the distance between the point being the geometric center of the rectangle
 encompassing the symbol (suits), and the subsequent points on the edges of the symbol pattern. For building
@@ -110,7 +102,7 @@ for card identification are presented in the picture below.
 <img width="450" height="350" src = img/suits_patterns.jpg/>
 
 
-- getFFT_ function<br/>
+- <b> getFFT_ function </b> <br/>
 Its task is to create a distance function (along the radius) of the symbol shape from the center
 the rectangle that includes the symbol. The idea behind this function is that for a specific symbol
 in the rectangle, the pointer is set to the center resulting from the diagonal
