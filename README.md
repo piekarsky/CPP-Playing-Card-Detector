@@ -1,8 +1,8 @@
 # CPP-Playing-Card-Detector
 
 
-### 1. Overview
-Project in C++ with only STL. This program finds, marks and recognizes playing cards not using an extra image processing library such as OpenCV. This program calculates the perimeter and area of playing cards, determines their center and marks suits inside them.  The program finds playing cards based on the 'flood filling' algorithm, which assumes that a certain set of points is given starter (grains, seeds), from which the expansion of areas begins. 
+### Overview
+Project in C++ with only STL. This program finds, marks and recognizes playing cards not using an extra image processing library such as OpenCV. This program also calculates the perimeter of playing cards, determines their center and marks suits inside them.  The program finds playing cards based on the **flood fill** algorithm, which assumes that a certain set of points is given starter (grains, seeds), from which the expansion of areas begins. 
 
 
 The example photo showing the operation of this program is presented below.
@@ -14,8 +14,8 @@ The images below show how this program works.
 <img width="520" height="750" src = img/console.jpg/>
 
 
-### 2. Working principle 
-The most important functions in this program are:
+### Working principle 
+The most important functions of the program are described in the sections below.
 - <b>grayscale function </b> <br/> </b>
 The purpose of this function is to convert an original photo to grayscale. A grayscale image is an image in which the proportion of each R, G, B component is the same. Making an image in grayscale comes down to such transformation of the image to obtain for each pixel of the image, according to the degree of brightness of the pixel, the same share of each of these components. For this purpose, first, a pixel of the image with a specific color is read with the appropriate share of each of the basic components and the R, G, B components are extracted. Then, the brightness of each color is summed up and divides this sum without remainder by 3. After this operation, it performs synthesis color from these three components. The operations are performed in a loop for each image pixel.
 The image below shows the original photo after conversion.
@@ -31,18 +31,13 @@ The image below shows the grayscale image after applying the thresholding.
 
 
 - <b> findCard function </b> <br/>
-The purpose of this function is to find,fill and circle playing cards. The feature of finding cards is based on the 'flood filling' algorithm, which assumes that a certain set of points is given starter (seeds), from which the growth of areas begins. Given attachment point
-it is up to grain if it meets the uniformity test, so all pixels are consistent in eight directions to the start pixel and having the same color as it will be colored in
-new fill color. It follows that the area must be filled before the operation
-solid color. On the other hand, adjacent areas may have any colors, but different from
-the color of the filled area. The pixel we start filling the area with (grain
-fill) must be inside the area to be filled. If the grain hits the
-'Fertile ground', it fills it with color and tries to further propagate in eight directions.
-This way the entire area will be painted over with the specified color. Thanks to the use of
-of this algorithm, the cards may be objects defined by rectangles. <br/>
-Source: www.eduinf.waw.pl/inf/utils/002_roz/2008_08.php
-
-The image after the application of the flood algorithm is presented below.
+The purpose of this function is to find, fill and circle playing cards. The card finder feature is based
+on the ‘flood fill’ algorithm, which assumes that a certain set of points is given starting points (seeds), from which the growth of areas begins. A given connection point is grainy if it satisfies the uniformity test, so all pixels coherent in eight directions to the starting pixel and having the same color as it will be colored to new fill color. It follows that the filled area must have before the operation uniform color. Contiguous areas, however, can have any color, but different from the color of the filled area. The pixel from which we start filling the area (grain fill) must be inside the fill area. If the seed hits
+fertile ground, it fills it with color and tries to propagate further in eight directions.
+This way, the entire area will be painted with the specified color. Thanks to the application
+cards of this algorithm can be objects defined by rectangles.. <br/>
+Source (in Polish): www.eduinf.waw.pl/inf/utils/002_roz/2008_08.php 
+The image after the application of the flood fill algorithm is presented below.
 <img width="550" height="350" src = img/floodfill.jpg/>
 
 
@@ -52,9 +47,10 @@ The picture below shows  the original image with the playing cards circled in re
 
 
 - <b> colorBorder function </b> <br/>
-This function fills the area between the rectangle's edges and the outline playing
-cards in order to search each symbol in a specific area. After this function is used in the analyzed rectangle, only the card suits are black.
-The picture below shows the original image after applying this function
+This function is designed to fill the area between the edges of the rectangle and the contour
+cards to search for individual symbols in a specific area. After using this function, only card symbols are black in the analyzed rectangle.
+The picture below shows the original image after applying this and previous functions.
+
 <img width="550" height="350" src = img/colorborder.jpg/>
 
 
@@ -90,7 +86,6 @@ specified by matrix ofst) there is no point for which this value of getD2 was
 smaller, this point is the center of the card. And if there is a point in the vicinity of this point which
 is better (i.e. has a smaller standard deviation), the algorithm goes in its direction.
 The action ends when there is no better point in the eight coherent environment.
-<hr>
 
 
 - <b> setSymArr function </b> <br/>
