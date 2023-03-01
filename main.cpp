@@ -26,7 +26,7 @@ double symHistS[4][HIST_VO_];
 double oOhistS[4][2];
 
 /*
-this function converts an image to grayscale
+converts an image to grayscale
 */
 void grayscale(Image3CH & in, Image1CH & out)
 {
@@ -43,7 +43,7 @@ void grayscale(Image3CH & in, Image1CH & out)
 
 
 /*
-this function performs an image thresholding
+performs an image thresholding
 */
 void binarization(Image1CH & in)
 {
@@ -84,7 +84,7 @@ double dist(double xt, double yt, double xt1, double yt1)
 
 
 /*
-this function creates a distance function (along the radius) of a symbol shape from the center of a rectangle that includes a symbol
+creates a distance function (along the radius) of a symbol shape from the center of a rectangle that includes a symbol
 */
 void getFFT_(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr, unsigned int Ytr, double arr[HIST_VOL], double ColBor, double &oO)
 {
@@ -171,21 +171,21 @@ void getFFT(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr,
     double arr[HIST_VOL], oO = 0.0;
     unsigned int i;
     getFFT_(dst, Xbl, Ybl, Xtr, Ytr, arr, iNkar, oO);
-    lista->setOo(oO);
+    listA->setOo(oO);
     for(i = 0; i < HIST_VOL; i++)
     {
-        lista->setFFTarr(arr[i]);
+        listA->setFFTarr(arr[i]);
     }
     for(i = 0; i < HIST_VOL; i++)
     {
-        tst.DrawPoint(i + I*519, J*202 + ((int)floor(/*lista->getFFTarr[i]*/arr[i] * 200.0)));
+        tst.DrawPoint(i + I*519, J*202 + ((int)floor(/*listA->getFFTarr[i]*/arr[i] * 200.0)));
     }
     //tst.ShowImage("FFT");		// display the histogram
 
 }
 
 /*
-function calculating the standard deviation of the distance from the boundary points of the figure (arr) to the point inside the figure (p (x, y))
+calculates the standard deviation of the distance from the boundary points of the figure (arr) to the point inside the figure (p (x, y))
 = minimum for the center of the figure
 */
 double getD2(double arr[HIST_VOL][2], double x, double y)
@@ -224,7 +224,7 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
 
 
     /*
-    this function fills the area between the rectangle's edges and the card outline
+    fills the area between the rectangle's edges and the card outline
     */
     void colorBorder(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr, unsigned int Ytr)
     {
@@ -281,7 +281,7 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
 
 
     / *
-    this function finds and marks the colors of the cards
+    finds and marks the colors of the cards
     * /
     unsigned int findSign(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr, unsigned int Ytr, unsigned int Id, unsigned int &I, unsigned int &J)
     {
@@ -428,7 +428,7 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
                             J = 0;
                         }
                     }
-                    goL = lista->next(Id);
+                    goL = listA->next(Id);
                 }
             }
         }
@@ -464,7 +464,7 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
 
    
     / *
-    the function finds the cards and circles them with rectangles
+    finds the cards and circles them with rectangles
     * /
     void findCard(Image1CH &dst)
     {
@@ -579,7 +579,7 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
         goL = true;
         while(goL)
         {
-            goL = lista->bot() && goL;
+            goL = listA->bot() && goL;
             if(goL)
             {
                 goD = true;
@@ -652,7 +652,7 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
 
 
     /*
-    this function identifies symbols by comparing the pattern and symbol histograms on the card
+    identifies symbols by comparing the pattern and symbol histograms on the card
     */
     unsigned int setCarCol_(unsigned int Id)
     {
@@ -681,7 +681,7 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
                 {
                     i0 = i;
                     ccC = T[i];			// finds the smallest value
-                }														   	// i0 - wskazany symbol
+                }														   	
             }
         }
         return i0;
@@ -712,7 +712,7 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
 
 
     /*
-    function indentifies symbols by comparing the pattern and symbol histograms on the card
+    indentifies symbols by comparing the pattern and symbol histograms on the card
     */
     unsigned int setCarCol_(unsigned int Id)
     {
@@ -722,7 +722,7 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
         unsigned int i, k = 0, ccC = 10000;
         for (i = 0; i < 4; i++)
             T[i] = 0.0;
-        if(lista->bot(Id))
+        if(listA->bot(Id))
         {
             k = 0;
             while(goL)
@@ -788,7 +788,7 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
             grayscale(sym3, sym1);
             binarization(sym1);
 
-            getFFT_(sym1, 2, 2, SYM_W - 2, SYM_H - 2, symH_arr, 1.0, oO);	// a function that counts the contour curve and circuit
+            getFFT_(sym1, 2, 2, SYM_W - 2, SYM_H - 2, symH_arr, 1.0, oO);	// function that counts the contour curve and circuit
             oOhistS[i][0] = oO;
 
             // sym1.ShowImage("Original");
@@ -831,7 +831,7 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
 
 
     /*
-    function prints (separately for each card) circumference, area and area / circumference ratio for symbols
+    prints (separately for each card) circumference, area and area / circumference ratio for symbols
     and also total number of cards and total number of symbols in the photo
      */
     void print()
@@ -840,11 +840,11 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
         unsigned int Id;
         int lk = 0, ls = 0;			 // card and symbol counter
         double xC, yC;
-        if (lista->bot(0))
+        if (listA->bot(0))
         {
             while (goL)
             {
-                lista->getC(xC, yC);
+                listA->getC(xC, yC);
                 printf("Card = %1d  Color = %1d \tCircumference = %6.3f\t  oX = %4.1f  oY = %4.1f\n", listA->getCard(),
                        listA->getColor(), listA->getOo(),  xC, yC);
                 Id = listA->getId();
