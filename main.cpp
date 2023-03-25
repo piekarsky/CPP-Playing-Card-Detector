@@ -26,7 +26,7 @@ double symHistS[4][HIST_VO_];
 double oOhistS[4][2];
 
 /*
-converts an image to grayscale
+converting an image to grayscale
 */
 void grayscale(Image3CH & in, Image1CH & out)
 {
@@ -43,7 +43,7 @@ void grayscale(Image3CH & in, Image1CH & out)
 
 
 /*
-performs an image thresholding
+performing an image thresholding
 */
 void binarization(Image1CH & in)
 {
@@ -84,7 +84,7 @@ double dist(double xt, double yt, double xt1, double yt1)
 
 
 /*
-creates a distance function (along the radius) of a symbol shape from the center of a rectangle that includes a symbol
+creating a distance function (along the radius) of a symbol shape from the center of a rectangle that includes a symbol
 */
 void getFFT_(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr, unsigned int Ytr, double arr[HIST_VOL], double ColBor, double &oO)
 {
@@ -185,7 +185,7 @@ void getFFT(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr,
 }
 
 /*
-calculates the standard deviation of the distance from the boundary points of the figure (arr) to the point inside the figure (p (x, y))
+calculating the standard deviation of the distance from the boundary points of the figure (arr) to the point inside the figure (p (x, y))
 = minimum for the center of the figure
 */
 double getD2(double arr[HIST_VOL][2], double x, double y)
@@ -280,9 +280,9 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
     }
 
 
-    / *
-    finds and marks the colors of the cards
-    * /
+    /*
+    finding and marks the colors of the cards
+    */
     unsigned int findSign(Image1CH &dst, unsigned int Xbl, unsigned int Ybl, unsigned int Xtr, unsigned int Ytr, unsigned int Id, unsigned int &I, unsigned int &J)
     {
         unsigned int ccC = 0;
@@ -463,9 +463,9 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
 
 
    
-    / *
-    finds the cards and circles them with rectangles
-    * /
+    /*
+    finding the cards and circles them with rectangles
+    */
     void findCard(Image1CH &dst)
     {
         /*
@@ -652,7 +652,7 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
 
 
     /*
-    identifies symbols by comparing the pattern and symbol histograms on the card
+    identifing symbols by comparing the pattern and symbol histograms on the card
     */
     unsigned int setCarCol_(unsigned int Id)
     {
@@ -712,7 +712,7 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
 
 
     /*
-    indentifies symbols by comparing the pattern and symbol histograms on the card
+    indentifing symbols by comparing the pattern and symbol histograms on the card
     */
     unsigned int setCarCol_(unsigned int Id)
     {
@@ -831,8 +831,8 @@ double getD2(double arr[HIST_VOL][2], double x, double y)
 
 
     /*
-    prints (separately for each card) circumference, area and area / circumference ratio for symbols
-    and also total number of cards and total number of symbols in the photo
+    printing (separately for each card) circumference, area, area/circumference ratio for symbols,
+    the total number of cards and the total number of symbols in the photo
      */
     void print()
     {
