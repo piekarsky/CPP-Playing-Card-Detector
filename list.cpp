@@ -32,7 +32,7 @@ void list::push(unsigned int blX, unsigned int blY, unsigned int trX, unsigned i
  	Card->trY = trY;
   	Card->next = boT;				  
  	Card->Id   = Id;
-    	Card->inCard  = inCard;
+    	Card->idCard  = idCard;
    	
 	if(Card->next != 0)Card->next->prev = Card;
     	Card->prev  = 0;
