@@ -163,20 +163,6 @@ bool list::bot(unsigned int inCard){
 }
 
 
-bool list::bot(unsigned int inCard){
-    bool re = false;
-    if(boT != 0){
-        acT = boT;
-        if(acT->idCard == inCard){
-            re = true;
-        } else {
-            re = next(inCard); 
-        }
-    } else {
-        re = false;			
-    }
-    return re;
-}
 
 unsigned int list::getId(){		// get the id from the current element
     return acT->Id;  
