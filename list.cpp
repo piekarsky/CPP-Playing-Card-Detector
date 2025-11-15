@@ -110,26 +110,26 @@ void list::get(unsigned int &blX, unsigned int &blY, unsigned int &trX, unsigned
 /*
 this function set the value to 2, 7, 8, 9
 */
-void list::setCard(int cardValue){	
-    acT->cardValue = card;
+void list::setCard(int card){	
+    acT->card = card;
 }
 
-void list::setCardColor(int cardValue){	 // set card color to 0, 1, 2, 3
-    acT->cardValue = card;
+void list::setSuit(int card){	 //  set the suit of the card 
+    acT->suit = card;
 }
-void listA::setColor(int color){	 // set card color to 0, 1 [black, red]
-    acT->Color = card;
+void list::setColor(int color){	 // set the color of the card 
+    acT->color = card;
 }
 
 int list::getCard(){			     // get the value from the current card
-    return acT->cardValue;
+    return acT->card;
 }
 
 int list::getColor(){				 // get the suit of the current card
     return acT->color;
 }
 int list::getColor(){ 
-    return acT->cardValue;
+    return acT->card;
 }
 
 
@@ -163,6 +163,20 @@ bool list::bot(unsigned int inCard){
 }
 
 
+bool list::bot(unsigned int inCard){
+    bool re = false;
+    if(boT != 0){
+        acT = boT;
+        if(acT->idCard == inCard){
+            re = true;
+        } else {
+            re = next(inCard); 
+        }
+    } else {
+        re = false;			
+    }
+    return re;
+}
 
 unsigned int list::getId(){		// get the id from the current element
     return acT->Id;  
