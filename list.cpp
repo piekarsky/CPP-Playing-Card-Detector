@@ -190,7 +190,13 @@ bool list::goId(unsigned int Id){			// go to the specified id
 }
 
 
-
+bool list::del(unsigned int Id){
+	bool re = goId(Id); 
+	if(re){
+        del();
+    }
+	return re;
+}
 
 void list::getC(double &xC, double &yC) {
 	xC = acT->xC;
