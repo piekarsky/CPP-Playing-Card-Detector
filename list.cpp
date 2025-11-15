@@ -19,30 +19,31 @@ list::~list(){
 
 
 
-void list::push(unsigned int blX, unsigned int blY, unsigned int trX, unsigned int trY, unsigned int inCard){
+void list::push(unsigned int blX, unsigned int blY, unsigned int trX, unsigned int trY, unsigned int idCard){
 	
-	// push - inserts a new element (bottomleft, topright and inCard)
+	// push - inserts a new element (bottomleft, topright and idCard)
 	
-	card* Card = new card();		 	 
-   	if(toP == 0)toP = karta;
+	card* card = new card();		 	 
+   	if(toP == 0)toP = card;
  	Id++;					                   
-  	Card->blX = blX;
-   	Card->blY = blY;
-   	Card->trX = trX;
- 	Card->trY = trY;
-  	Card->next = boT;				  
- 	Card->Id   = Id;
-    	Card->idCard  = idCard;
+  	card->blX = blX;
+   	card->blY = blY;
+   	card->trX = trX;
+ 	card->trY = trY;
+  	card->next = boT;				  
+ 	card->Id   = Id;
+    card->idCard  = idCard;
    	
-	if(Card->next != 0)Card->next->prev = Card;
-    	Card->prev  = 0;
-    	Card->Card = 0;
-   	boT = Card; 
-  	acT = Card;					 
+	if(card->next != 0)card->next->prev = card;
+    	card->prev  = 0;
+    	card->card = 0;
+   	boT = card; 
+  	acT = card;					 
     	for(unsigned int i = 0; i < HIST_VO_; i++){
-        		Card->ffT[i] = 0.0;				  // reset this matrix to add items to the histogram
+        		card->ffT[i] = 0.0;				  // reset this matrix to add items to the histogram
   	}
 }
+
 
 bool list::top(){ 
     	bool re = true;;
@@ -64,6 +65,9 @@ bool list::bot(){
     }
     return re;
 }
+
+
+
 bool list::prev(){
     bool re = true;;
     if(acT != 0){
@@ -73,22 +77,25 @@ bool list::prev(){
     }
     return re;
 }
+
+
 bool list::next(){
     bool re = true;
     if(acT != 0){
         acT = acT->next;	// if this current element exists then set pointer to whichever is next
 
-        re = acT != 0;		 // if not zero then there is a successor, and if not it was the last card
+        re = acT != 0;		 // if it is not equal to zero then there is a successor, and if not then it was the last card
     } else { 
-        re = false;		     // false is when act is zero
+        re = false;		     // false is when 'act' is equal to zero
     }
     return re;
 }
 
 
 bool list::empty(){
-    return (toP == 0);		 // top is zero when the list is empty
+    return (toP == 0);		 // top is equal to zero when the list is empty
 }
+
 
 void list::get(unsigned int &blX, unsigned int &blY, unsigned int &trX, unsigned int &trY, unsigned int &Id){
     blX     = acT->blX;
@@ -97,6 +104,7 @@ void list::get(unsigned int &blX, unsigned int &blY, unsigned int &trX, unsigned
     trY     = acT->trY;
     Id      = acT->Id;
 }
+
 
 
 /*
