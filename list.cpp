@@ -218,6 +218,10 @@ bool list::del(){
 }
 
 
+unsigned int list::getRad(){
+    return acT->getRad();
+}
+
 void list::getC(double &xC, double &yC) {
 	xC = acT->xC;
 	yC = acT->yC;
