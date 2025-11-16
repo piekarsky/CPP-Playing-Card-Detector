@@ -198,6 +198,26 @@ bool list::del(unsigned int Id){
 	return re;
 }
 
+bool list::del(){
+	bool re = true;
+	card* temp = acT;
+    if(acT->prev != 0){					 //         <--------------    prev
+		acT->prev->next = acT->next;	 //     prev[del]  | for del | next[del]
+        if(acT->next != 0){				 //       next        --------->
+            acT->next->prev = acT->prev;
+        }
+    } else {
+        if(acT->next != 0){
+            acT->next->prev = 0;
+            boT = acT->next;
+        }
+    }
+    acT->next = 0; acT->prev = 0; acT->Id = 0;
+    delete temp;
+	return re;
+}
+
+
 void list::getC(double &xC, double &yC) {
 	xC = acT->xC;
 	yC = acT->yC;
